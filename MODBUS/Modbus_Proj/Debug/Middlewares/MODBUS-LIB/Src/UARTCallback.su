@@ -1,0 +1,4 @@
+C:/Users/G/CODE/proj_STM32/Modbus-STM32-FreeRTOS-RTU/MODBUS-LIB/Src/UARTCallback.c:24:6:HAL_UART_TxCpltCallback	32	static,ignoring_inline_asm
+C:/Users/G/CODE/proj_STM32/Modbus-STM32-FreeRTOS-RTU/MODBUS-LIB/Src/UARTCallback.c:60:6:HAL_UART_RxCpltCallback	40	static,ignoring_inline_asm
+C:/Users/G/CODE/proj_STM32/Modbus-STM32-FreeRTOS-RTU/MODBUS-LIB/Src/UARTCallback.c:101:6:HAL_UART_ErrorCallback	24	static
+C:/Users/G/CODE/proj_STM32/Modbus-STM32-FreeRTOS-RTU/MODBUS-LIB/Src/UARTCallback.c:127:6:HAL_UARTEx_RxEventCallback	32	static,ignoring_inline_asm
