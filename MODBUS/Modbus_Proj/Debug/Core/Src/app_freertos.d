@@ -47,7 +47,7 @@ Core/Src/app_freertos.o: ../Core/Src/app_freertos.c \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart_ex.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h \
- C:/Users/G/CODE/proj_STM32/Modbus-STM32-HAL-FreeRTOS/MODBUS-LIB/Inc/Modbus.h \
+ C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/MODBUS/MODBUS-LIB/Inc/Modbus.h \
  ../Core/Inc/ModbusConfig.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
@@ -103,7 +103,7 @@ Core/Src/app_freertos.o: ../Core/Src/app_freertos.c \
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart_ex.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h:
-C:/Users/G/CODE/proj_STM32/Modbus-STM32-HAL-FreeRTOS/MODBUS-LIB/Inc/Modbus.h:
+C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/MODBUS/MODBUS-LIB/Inc/Modbus.h:
 ../Core/Inc/ModbusConfig.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:

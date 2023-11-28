@@ -39,34 +39,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := MODBUS_WB55_SLAVE_RTOS_DMA
+BUILD_ARTIFACT_NAME := IO_Module_Modbus_Proj
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-MODBUS_WB55_SLAVE_RTOS_DMA.elf \
+IO_Module_Modbus_Proj.elf \
 
 MAP_FILES += \
-MODBUS_WB55_SLAVE_RTOS_DMA.map \
+IO_Module_Modbus_Proj.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-MODBUS_WB55_SLAVE_RTOS_DMA.list \
+IO_Module_Modbus_Proj.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: MODBUS_WB55_SLAVE_RTOS_DMA.elf secondary-outputs
+main-build: IO_Module_Modbus_Proj.elf secondary-outputs
 
 # Tool invocations
-MODBUS_WB55_SLAVE_RTOS_DMA.elf MODBUS_WB55_SLAVE_RTOS_DMA.map: $(OBJS) $(USER_OBJS) C:\Users\G\CODE\proj_STM32\Modbus-STM32-FreeRTOS-RTU\MODBUS_WB55_SLAVE_RTOS_DMA\STM32WB55RGVX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "MODBUS_WB55_SLAVE_RTOS_DMA.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\G\CODE\proj_STM32\Modbus-STM32-FreeRTOS-RTU\MODBUS_WB55_SLAVE_RTOS_DMA\STM32WB55RGVX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MODBUS_WB55_SLAVE_RTOS_DMA.map" -Wl,--gc-sections -static -L"C:\Users\G\CODE\proj_STM32\Modbus-STM32-HAL-FreeRTOS\MODBUS-LIB" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+IO_Module_Modbus_Proj.elf IO_Module_Modbus_Proj.map: $(OBJS) $(USER_OBJS) C:\Users\G\CODE\FLOOR-HEATING-IO-MODULE\MODBUS\Modbus_Proj\STM32WB55RGVX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "IO_Module_Modbus_Proj.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\G\CODE\FLOOR-HEATING-IO-MODULE\MODBUS\Modbus_Proj\STM32WB55RGVX_FLASH.ld" --specs=nosys.specs -Wl,-Map="IO_Module_Modbus_Proj.map" -Wl,--gc-sections -static -L"C:\Users\G\CODE\FLOOR-HEATING-IO-MODULE\MODBUS\MODBUS-LIB" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -75,14 +75,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-MODBUS_WB55_SLAVE_RTOS_DMA.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "MODBUS_WB55_SLAVE_RTOS_DMA.list"
+IO_Module_Modbus_Proj.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "IO_Module_Modbus_Proj.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) MODBUS_WB55_SLAVE_RTOS_DMA.elf MODBUS_WB55_SLAVE_RTOS_DMA.list MODBUS_WB55_SLAVE_RTOS_DMA.map default.size.stdout
+	-$(RM) IO_Module_Modbus_Proj.elf IO_Module_Modbus_Proj.list IO_Module_Modbus_Proj.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

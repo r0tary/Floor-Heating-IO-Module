@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>MODBUS_WB55_SLAVE_RTOS_DMA</name>
+	<name>IO_Module_Modbus_Proj</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -40,6 +40,10 @@
 		<variable>
 			<name>copy_PARENT</name>
 			<value>$%7BPARENT-3-PROJECT_LOC%7D/Downloads/Modbus-STM32-HAL-FreeRTOS-master(1)/Modbus-STM32-HAL-FreeRTOS-master</value>
+		</variable>
+		<variable>
+			<name>copy_PARENT1</name>
+			<value>$%7BPARENT-3-PROJECT_LOC%7D/CODE/FLOOR-HEATING-IO-MODULE/MODBUS</value>
 		</variable>
 	</variableList>
 </projectDescription>
