@@ -71,3 +71,12 @@ The master thread will go in a blocked state temporarily till either an answer c
 
 It should be noted that the library has quite a bit of error checking for both sklave and master configurations.
 
+### Library Description
+#### Timers
+The library uses two timers (one if slave configuration is used). The timer shared between both configurations is **TimerT35** which is used to detect the end of a frame *(end of an incomming message)* on the RX line.
+
+For a master configuration, a **TimerTimeout** is used to detect the timeout in case a slave device takes too long to respond.
+
+
+
+
