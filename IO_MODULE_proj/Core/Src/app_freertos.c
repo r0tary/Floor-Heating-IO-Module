@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
+#include "app_freertos.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,7 +51,16 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
+//extern ADC_HandleTypeDef hadc1;
 
+//extern osThreadId_t TempCalcHandle;
+//extern const osThreadAttr_t TempCalc_attributes;
+
+/* Definitions for tempFlags */
+//extern osEventFlagsId_t tempFlagsHandle;
+//extern const osEventFlagsAttr_t tempFlags_attributes;
+
+extern void CalculateTemp_Thread(void *argument);
 /* USER CODE END Variables */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,15 +74,16 @@
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
-/*
+
 void ADC_Temp_Thread_Start(void)
 {
-	//ADC_HandleTypeDef adc1 = (ADC_HandleTypeDef)hadc1;
+	TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
+	tempFlagsHandle = osEventFlagsNew(&tempFlags_attributes);
 
 }
 
 
-*/
+
 
 /* USER CODE END Application */
 

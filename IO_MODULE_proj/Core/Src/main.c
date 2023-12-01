@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "app_freertos.c"
+#include "app_freertos.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,7 +88,6 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USB_PCD_Init(void);
-static void MX_MEMORYMAP_Init(void);
 static void MX_ADC1_Init(void);
 void StartDefaultTask(void *argument);
 
@@ -135,7 +134,6 @@ int main(void)
   MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_USB_PCD_Init();
-  MX_MEMORYMAP_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
@@ -155,10 +153,8 @@ int main(void)
  //Start capturing traffic on serial Port
   ModbusStart(&ModbusH);
 
-  //ADC_Temp_Thread_Start();
-
-  TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
-  tempFlagsHandle = osEventFlagsNew(&tempFlags_attributes);
+  //TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
+  //tempFlagsHandle = osEventFlagsNew(&tempFlags_attributes);
 
 
 
@@ -186,7 +182,7 @@ int main(void)
   /* Create the thread(s) */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
-
+  ADC_Temp_Thread_Start();
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
@@ -328,7 +324,7 @@ static void MX_ADC1_Init(void)
   /** Common config
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
@@ -339,7 +335,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc1.Init.OversamplingMode = DISABLE;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
@@ -362,27 +358,6 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
-
-}
-
-/**
-  * @brief MEMORYMAP Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_MEMORYMAP_Init(void)
-{
-
-  /* USER CODE BEGIN MEMORYMAP_Init 0 */
-
-  /* USER CODE END MEMORYMAP_Init 0 */
-
-  /* USER CODE BEGIN MEMORYMAP_Init 1 */
-
-  /* USER CODE END MEMORYMAP_Init 1 */
-  /* USER CODE BEGIN MEMORYMAP_Init 2 */
-
-  /* USER CODE END MEMORYMAP_Init 2 */
 
 }
 
@@ -561,11 +536,11 @@ void CalculateTemp_Thread(void *argument){
 	for(;;)
 	{
 		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,1);
-		osEventFlagsWait(tempFlagsHandle,0x01,osFlagsWaitAll,osWaitForever);
+		osEventFlagsWait(tempFlagsHandle, 0x01, osFlagsWaitAll, osWaitForever);
 		ADCvoltage = ADCrawReading * 0.00073242;
 		Temperature = ((ADCvoltage - 0.408)*100) / 2.04;
 		HAL_ADC_Stop_DMA(&hadc1);
-		osDelay(5000);
+		osDelay(2);
 	}
 
 }
