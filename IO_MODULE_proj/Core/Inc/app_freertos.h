@@ -17,6 +17,8 @@ extern osThreadId_t TempCalcHandle;
 extern const osThreadAttr_t TempCalc_attributes;
 extern osEventFlagsId_t tempFlagsHandle;
 extern const osEventFlagsAttr_t tempFlags_attributes;
-
+extern osThreadId_t ControlHandle;
+extern const osThreadAttr_t Control_attributes;
 extern void CalculateTemp_Thread(void *argument);
+extern void ControlTask(void *argument);
 void ADC_Temp_Thread_Start(void);

@@ -37,11 +37,6 @@
 /* USER CODE BEGIN PD */
 /* Definitions for TempCalc */
 
-
-
-
-
-
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -51,16 +46,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-//extern ADC_HandleTypeDef hadc1;
 
-//extern osThreadId_t TempCalcHandle;
-//extern const osThreadAttr_t TempCalc_attributes;
-
-/* Definitions for tempFlags */
-//extern osEventFlagsId_t tempFlagsHandle;
-//extern const osEventFlagsAttr_t tempFlags_attributes;
-
-extern void CalculateTemp_Thread(void *argument);
 /* USER CODE END Variables */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,14 +60,18 @@ extern void CalculateTemp_Thread(void *argument);
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
-
+// Initializes the thread and event flags in charge of calculating the temperature values form PT1000
 void ADC_Temp_Thread_Start(void)
 {
 	TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
 	tempFlagsHandle = osEventFlagsNew(&tempFlags_attributes);
-
 }
 
+// Initializes required components for Control algorithm thread
+void Control_Thread_Init(void)
+{
+	ControlHandle = osThreadNew(ControlTask, NULL, &Control_attributes);
+}
 
 
 

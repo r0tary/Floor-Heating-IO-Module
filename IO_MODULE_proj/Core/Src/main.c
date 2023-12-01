@@ -68,11 +68,18 @@ const osThreadAttr_t TempCalc_attributes = {
   .stack_size = 128 * 4
 };
 
+osThreadId_t ControlHandle;
+const osThreadAttr_t Control_attributes = {
+	  .name = "Control",
+	  .priority = (osPriority_t) osPriorityLow,
+	  .stack_size = 128 * 4
+};
 /* Definitions for tempFlags */
 osEventFlagsId_t tempFlagsHandle;
 const osEventFlagsAttr_t tempFlags_attributes = {
   .name = "tempFlags"
 };
+
 
 volatile uint16_t ADCrawReading;
 volatile double ADCvoltage;
@@ -90,7 +97,7 @@ static void MX_USART1_UART_Init(void);
 static void MX_USB_PCD_Init(void);
 static void MX_ADC1_Init(void);
 void StartDefaultTask(void *argument);
-
+void ControlTask(void *argument);
 /* USER CODE BEGIN PFP */
 void CalculateTemp_Thread(void *argument);
 /* USER CODE END PFP */
@@ -182,9 +189,11 @@ int main(void)
   /* Create the thread(s) */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
-  ADC_Temp_Thread_Start();
+
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  ADC_Temp_Thread_Start();
+  Control_Thread_Init();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -529,6 +538,14 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+
+	osEventFlagsSet(tempFlagsHandle,0x01);
+
+}
+
 void CalculateTemp_Thread(void *argument){
 
 	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
@@ -545,13 +562,16 @@ void CalculateTemp_Thread(void *argument){
 
 }
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
+void ControlTask(void *argument){
+	// Add the control algorithm and schedule the task properly to execute every period of time
+	// TODO
 
-	osEventFlagsSet(tempFlagsHandle,0x01);
+	for(;;)
+	{
+		osDelay(1);
+	}
 
 }
-
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
