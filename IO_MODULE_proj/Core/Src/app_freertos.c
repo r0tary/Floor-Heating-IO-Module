@@ -74,11 +74,7 @@ volatile double Temperature;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 87f8dd6860dbfaa1f862358e03f1bf112f17dac7
 /* USER CODE END FunctionPrototypes */
 
 /* Private application code --------------------------------------------------*/
@@ -106,9 +102,6 @@ void Control_Thread_Init(void)
 {
 	ControlHandle = osThreadNew(ControlTask, NULL, &Control_attributes);
 }
-
-
-<<<<<<< HEAD
 
 // System Threads
 
@@ -139,7 +132,6 @@ void ControlTask(void *argument){
 	}
 
 }
-=======
->>>>>>> 87f8dd6860dbfaa1f862358e03f1bf112f17dac7
+
 /* USER CODE END Application */
 

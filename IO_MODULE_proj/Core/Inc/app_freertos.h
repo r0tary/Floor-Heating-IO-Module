@@ -22,11 +22,7 @@ extern const osThreadAttr_t Control_attributes;
 extern void CalculateTemp_Thread(void *argument);
 extern void ControlTask(void *argument);
 void ADC_Temp_Thread_Start(void);
-<<<<<<< HEAD
 void Control_Thread_Init(void);
-=======
-
-
 
 //Holding registers - can be written and read from
 static uint16_t Holding_Registers_Database[10]={
@@ -51,4 +47,4 @@ static  uint16_t Input_Coils_Database[10]={
 		0b1100110010100011, 0b0110011010101111,
 		0b0110000010111100
 };
->>>>>>> 87f8dd6860dbfaa1f862358e03f1bf112f17dac7
+
