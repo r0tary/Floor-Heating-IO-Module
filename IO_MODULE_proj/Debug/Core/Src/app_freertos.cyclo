@@ -1,2 +1,2 @@
-../Core/Src/app_freertos.c:64:6:ADC_Temp_Thread_Start	1
-../Core/Src/app_freertos.c:71:6:Control_Thread_Init	1
+../Core/Src/app_freertos.c:62:6:ADC_Temp_Thread_Start	1
+../Core/Src/app_freertos.c:70:6:Control_Thread_Init	1

@@ -52,8 +52,6 @@
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
-//void ADC_Temp_Thread_Start(void);
-
 
 /* USER CODE END FunctionPrototypes */
 
@@ -68,11 +66,11 @@ void ADC_Temp_Thread_Start(void)
 }
 
 // Initializes required components for Control algorithm thread
+
 void Control_Thread_Init(void)
 {
 	ControlHandle = osThreadNew(ControlTask, NULL, &Control_attributes);
 }
-
 
 
 /* USER CODE END Application */
