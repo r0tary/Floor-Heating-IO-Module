@@ -22,3 +22,4 @@ extern const osThreadAttr_t Control_attributes;
 extern void CalculateTemp_Thread(void *argument);
 extern void ControlTask(void *argument);
 void ADC_Temp_Thread_Start(void);
+void Control_Thread_Init(void);

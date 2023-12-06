@@ -57,33 +57,12 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 128 * 4
 };
-/* USER CODE BEGIN PV */
 
 modbusHandler_t ModbusH;
 
-osThreadId_t TempCalcHandle;
-const osThreadAttr_t TempCalc_attributes = {
-  .name = "TempCalc",
-  .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
-};
 
-osThreadId_t ControlHandle;
-const osThreadAttr_t Control_attributes = {
-	  .name = "Control",
-	  .priority = (osPriority_t) osPriorityLow,
-	  .stack_size = 128 * 4
-};
-/* Definitions for tempFlags */
-osEventFlagsId_t tempFlagsHandle;
-const osEventFlagsAttr_t tempFlags_attributes = {
-  .name = "tempFlags"
-};
+/* USER CODE BEGIN PV */
 
-
-volatile uint16_t ADCrawReading;
-volatile double ADCvoltage;
-volatile double Temperature;
 
 
 /* USER CODE END PV */
@@ -539,39 +518,6 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-
-	osEventFlagsSet(tempFlagsHandle,0x01);
-
-}
-
-void CalculateTemp_Thread(void *argument){
-
-	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-
-	for(;;)
-	{
-		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,1);
-		osEventFlagsWait(tempFlagsHandle, 0x01, osFlagsWaitAll, osWaitForever);
-		ADCvoltage = ADCrawReading * 0.00073242;
-		Temperature = ((ADCvoltage - 0.408)*100) / 2.04;
-		HAL_ADC_Stop_DMA(&hadc1);
-		osDelay(2);
-	}
-
-}
-
-void ControlTask(void *argument){
-	// Add the control algorithm and schedule the task properly to execute every period of time
-	// TODO
-
-	for(;;)
-	{
-		osDelay(1);
-	}
-
-}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
