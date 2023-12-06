@@ -1,6 +1,7 @@
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_rcc.h:1679:22:LL_RCC_LSE_SetDriveCapability	16	static
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_bus.h:364:22:LL_AHB1_GRP1_EnableClock	24	static
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_bus.h:539:22:LL_AHB2_GRP1_EnableClock	24	static
+<<<<<<< HEAD
 ../Core/Src/main.c:93:5:main	8	static
 ../Core/Src/main.c:201:6:SystemClock_Config	112	static
 ../Core/Src/main.c:267:6:PeriphCommonClock_Config	88	static
@@ -12,3 +13,20 @@
 ../Core/Src/main.c:530:6:StartDefaultTask	16	static
 ../Core/Src/main.c:549:6:HAL_TIM_PeriodElapsedCallback	16	static
 ../Core/Src/main.c:566:6:Error_Handler	4	static,ignoring_inline_asm
+=======
+../Core/Src/main.c:117:5:main	8	static
+../Core/Src/main.c:237:6:SystemClock_Config	112	static
+../Core/Src/main.c:303:6:PeriphCommonClock_Config	88	static
+../Core/Src/main.c:335:13:MX_ADC1_Init	32	static
+../Core/Src/main.c:393:13:MX_I2C1_Init	8	static
+../Core/Src/main.c:441:13:MX_USART1_UART_Init	8	static
+../Core/Src/main.c:489:13:MX_USB_PCD_Init	8	static
+../Core/Src/main.c:520:13:MX_DMA_Init	8	static
+../Core/Src/main.c:545:13:MX_GPIO_Init	32	static
+../Core/Src/main.c:605:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/main.c:612:6:CalculateTemp_Thread	16	static
+../Core/Src/main.c:628:6:ControlTask	16	static
+../Core/Src/main.c:647:6:StartDefaultTask	16	static
+../Core/Src/main.c:666:6:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/main.c:683:6:Error_Handler	4	static,ignoring_inline_asm
+>>>>>>> 87f8dd6860dbfaa1f862358e03f1bf112f17dac7

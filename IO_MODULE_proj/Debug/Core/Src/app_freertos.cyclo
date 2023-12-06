@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ../Core/Src/app_freertos.c:83:6:HAL_ADC_ConvCpltCallback	1
 ../Core/Src/app_freertos.c:92:6:ADC_Temp_Thread_Start	1
 ../Core/Src/app_freertos.c:99:6:Control_Thread_Init	1
 ../Core/Src/app_freertos.c:108:6:CalculateTemp_Thread	1
 ../Core/Src/app_freertos.c:125:6:ControlTask	1
+=======
+../Core/Src/app_freertos.c:62:6:ADC_Temp_Thread_Start	1
+../Core/Src/app_freertos.c:70:6:Control_Thread_Init	1
+>>>>>>> 87f8dd6860dbfaa1f862358e03f1bf112f17dac7
