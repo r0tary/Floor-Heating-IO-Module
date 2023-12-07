@@ -23,6 +23,7 @@ extern void CalculateTemp_Thread(void *argument);
 extern void ControlTask(void *argument);
 void ADC_Temp_Thread_Start(void);
 void Control_Thread_Init(void);
+void ControlExecTim(void *argument);
 
 //Holding registers - can be written and read from
 static uint16_t Holding_Registers_Database[10]={

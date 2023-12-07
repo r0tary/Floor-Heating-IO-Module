@@ -59,12 +59,10 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 128 * 4
 };
-
-modbusHandler_t ModbusH;
-
+/* Definitions for controlTimer */
 
 /* USER CODE BEGIN PV */
-
+modbusHandler_t ModbusH;
 
 
 /* USER CODE END PV */
@@ -79,6 +77,7 @@ static void MX_USB_PCD_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_I2C1_Init(void);
 void StartDefaultTask(void *argument);
+void ControlExecTim(void *argument);
 
 /* USER CODE BEGIN PFP */
 void CalculateTemp_Thread(void *argument);
@@ -150,7 +149,7 @@ int main(void)
   ModbusStart(&ModbusH);
 
   //Initialize the SSD1306 OLED
-  ssd1306_Init();
+  //ssd1306_Init();
   //ssd1306_TestAll();
 
 
@@ -172,6 +171,10 @@ int main(void)
   /* add semaphores, ... */
   /* USER CODE END RTOS_SEMAPHORES */
 
+  /* Create the timer(s) */
+  /* creation of controlTimer */
+
+
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
@@ -187,7 +190,7 @@ int main(void)
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   ADC_Temp_Thread_Start();
-  //Control_Thread_Init();
+  Control_Thread_Init();
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
