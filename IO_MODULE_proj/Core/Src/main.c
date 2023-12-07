@@ -59,17 +59,12 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 128 * 4
 };
-<<<<<<< HEAD
+
 /* Definitions for controlTimer */
 
 /* USER CODE BEGIN PV */
 modbusHandler_t ModbusH;
 
-=======
-/* USER CODE BEGIN PV */
-
-modbusHandler_t ModbusH;
->>>>>>> 5ea67b44bedeb2c571ca773959e855f12553b2aa
 
 /* USER CODE END PV */
 
