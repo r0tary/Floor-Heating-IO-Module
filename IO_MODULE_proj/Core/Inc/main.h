@@ -72,7 +72,7 @@ static uint16_t Input_Register_Database[20] = {
 
 //Coil database - 1bit registers, can be written and read from
 static uint16_t Holding_Coils_Database[5]={
-		0b0000000000000000
+		0b0000000000000010
 };
 
 //Input coil database - 1bit registers, can only be read

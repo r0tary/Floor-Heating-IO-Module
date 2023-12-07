@@ -13,7 +13,7 @@
 #endif /* INC_APP_FREERTOS_H_ */
 //#pragma message ("app freertos inclued")
 
-#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+//#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
 //#define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
@@ -43,9 +43,12 @@ extern osEventFlagsId_t tempFlagsHandle;
 
 //Function prototypes
 void ADC_Temp_Thread_Start(void);
-void Control_Thread_Init(void);
+void Control_Thread_Init(modbusHandler_t *modH);
 void IO_Module_Init(modbusHandler_t * modH);
 void bitWrite(modbusHandler_t *modH, uint8_t pos, uint8_t val);
+uint8_t bitRead(modbusHandler_t *modH, uint8_t pos);
+
+
 
 /*------------IO Module Configuration------------*/
 

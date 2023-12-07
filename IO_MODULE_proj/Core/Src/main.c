@@ -145,6 +145,7 @@ int main(void)
   ModbusH.xTypeHW = USART_HW_DMA;
 
   IO_Module_Init(&ModbusH);
+  Control_Thread_Init(&ModbusH);
 
   //Initialize MODBUS library
   ModbusInit(&ModbusH);

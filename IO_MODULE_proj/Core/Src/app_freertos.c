@@ -25,7 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
-//#include "app_freertos.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -132,30 +132,32 @@ void ADC_Temp_Thread_Start(void)
 
 // Initializes required components for Control algorithm thread
 
-void Control_Thread_Init(void)
+void Control_Thread_Init(modbusHandler_t *modH)
 {
-	ControlHandle = osThreadNew(ControlTask, NULL, &Control_attributes);
+	ControlHandle = osThreadNew(ControlTask, modH, &Control_attributes);
 }
 
 
 // System Threads
 
 void ControlTask(void *argument){
+
+	modbusHandler_t *modH = (modbusHandler_t *)argument;
 	// Add the control algorithm and schedule the task properly to execute every period of time
 	// TODO
 
+	uint8_t TWA_Status = 0;
 
 	for(;;)
 	{
-/*
-		TWA_Status = bitRead(Holding_Coils_Database[0],1);
-		if(TWA_Status != placeholder){
-			HAL_GPIO_TogglePin(TWA1_GPIO_Port, TWA1_Pin);
-			placeholder = TWA_Status;
-		}
+
+		TWA_Status = bitRead(modH,1);
+
+
+		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
+
 		osDelay(5000);
 
-*/
 	}
 }
 
@@ -179,12 +181,23 @@ void bitWrite(modbusHandler_t * modH, uint8_t pos, uint8_t val)
 {
 	uint16_t *temp;
 	temp = &modH->u16regsCoilsRO[pos/16];
+
 	if (val == 1) {
 		*temp |= (1UL << (pos%16));
 	}
 	else {
 		*temp &= ~(1UL << (pos%16));
 	}
+}
+
+uint8_t bitRead(modbusHandler_t *modH, uint8_t pos)
+{
+	uint16_t *temp;
+	uint8_t res;
+	temp = &modH->u16regsCoils[0];
+
+	res = (*temp >> pos) & 0x01;
+	return res;
 }
 
 
