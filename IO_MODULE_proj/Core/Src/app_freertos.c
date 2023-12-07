@@ -55,13 +55,12 @@ const osThreadAttr_t Control_attributes = {
 	  .stack_size = 128 * 4
 };
 
-<<<<<<< HEAD
 // Timer handle
 osTimerId_t controlTimerHandle;
 const osTimerAttr_t controlTimer_attributes = {
   .name = "controlTimer"
 };
-=======
+
 // Screen thread handle
 osThreadId_t ScreenHandle;
 const osThreadAttr_t Screen_attributes = {
@@ -78,8 +77,6 @@ const osEventFlagsAttr_t tempFlags_attributes = {
   .name = "tempFlags"
 };
 
-
->>>>>>> 5ea67b44bedeb2c571ca773959e855f12553b2aa
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -182,7 +179,6 @@ void CalculateTemp_Thread(void *argument){
 
 }
 
-<<<<<<< HEAD
 void ControlTask(void *argument){
 	// Add the control algorithm and schedule the task properly to execute every period of time
 	// TODO
@@ -211,16 +207,11 @@ void ControlExecTim(void *argument)
 	osThreadFlagsSet(ControlHandle, 0x01);
   /* USER CODE END ControlExecTim */
 }
-=======
-
 
 void Screen_Thread(void *argument){
 
 }
 
 
-
-
->>>>>>> 5ea67b44bedeb2c571ca773959e855f12553b2aa
 /* USER CODE END Application */
 
