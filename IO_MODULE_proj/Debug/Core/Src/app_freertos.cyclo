@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-../Core/Src/app_freertos.c:109:6:HAL_ADC_ConvCpltCallback	1
-../Core/Src/app_freertos.c:118:6:ADC_Temp_Thread_Start	1
-../Core/Src/app_freertos.c:126:6:Control_Thread_Init	1
-../Core/Src/app_freertos.c:134:6:CalculateTemp_Thread	1
-../Core/Src/app_freertos.c:151:6:ControlTask	1
-../Core/Src/app_freertos.c:172:6:ControlExecTim	1
-=======
-../Core/Src/app_freertos.c:104:6:HAL_ADC_ConvCpltCallback	1
-../Core/Src/app_freertos.c:113:6:ADC_Temp_Thread_Start	1
-../Core/Src/app_freertos.c:121:6:Control_Thread_Init	1
-../Core/Src/app_freertos.c:128:6:ControlTask	1
-../Core/Src/app_freertos.c:140:6:CalculateTemp_Thread	1
-../Core/Src/app_freertos.c:159:6:Screen_Thread	1
->>>>>>> 5ea67b44bedeb2c571ca773959e855f12553b2aa
+../Core/Src/app_freertos.c:128:6:HAL_ADC_ConvCpltCallback	1
+../Core/Src/app_freertos.c:137:6:ADC_Temp_Thread_Start	1
+../Core/Src/app_freertos.c:145:6:Control_Thread_Init	1
+../Core/Src/app_freertos.c:153:6:CalculateTemp_Thread	1
+../Core/Src/app_freertos.c:170:6:ControlTask	1
+../Core/Src/app_freertos.c:191:6:ControlExecTim	1
+../Core/Src/app_freertos.c:199:6:Screen_Thread	1

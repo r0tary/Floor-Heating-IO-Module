@@ -150,18 +150,6 @@ void Control_Thread_Init(void)
 
 // System Threads
 
-void ControlTask(void *argument){
-	// Add the control algorithm and schedule the task properly to execute every period of time
-	// TODO
-
-	for(;;)
-	{
-
-
-	}
-
-}
-
 void CalculateTemp_Thread(void *argument){
 
 	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
