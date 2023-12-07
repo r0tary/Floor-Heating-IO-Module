@@ -11,8 +11,12 @@
 
 
 #endif /* INC_APP_FREERTOS_H_ */
+//#pragma message ("app freertos inclued")
 
-
+#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+#define bitSet(value, bit) ((value) |= (1UL << (bit)))
+#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
+//#define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
 
 extern ADC_HandleTypeDef hadc1;
 
@@ -36,16 +40,33 @@ extern osEventFlagsId_t tempFlagsHandle;
 	extern const osEventFlagsAttr_t tempFlags_attributes;
 
 
+
 //Function prototypes
 void ADC_Temp_Thread_Start(void);
 void Control_Thread_Init(void);
+void IO_Module_Init(modbusHandler_t * modH);
+void bitWrite(modbusHandler_t *modH, uint8_t pos, uint8_t val);
+
+/*------------IO Module Configuration------------*/
+
+//TWA configuration, 0 = NOT connected, 1 = connected
+#define TWA_1			1
+#define TWA_2			1
+#define TWA_3			1
+#define TWA_4			1
+
+//PT1000 temp sensor configuration, 0 = NOT connected, 1 = connected
+#define PT1000_1		0
+#define PT1000_2		0
+#define PT1000_3		0
+#define PT1000_4		0
 
 
 //Coil map, number indicates the coil number
 typedef enum COIL_MAP
 {
-	TWA1_STATUS 		= 0, //TWA connection, 0 = not connected, 1 = connected
-	TWA1_EN 			= 1, //0 = TWA off, 1 = TWA on
+	TWA1_STATUS 		= 0, //TWA connection
+	TWA1_EN 			= 1,
 	TWA2_STATUS 		= 2,
 	TWA2_EN 			= 3,
 	TWA3_STATUS 		= 4,
@@ -53,34 +74,24 @@ typedef enum COIL_MAP
 	TWA4_STATUS 		= 6,
 	TWA4_EN 			= 7,
 
-	TEMP1_EN 			= 16, //Physical temperature sensor
-	TEMP2_EN			= 17,
-	TEMP3_EN			= 18,
-	TEMP4_EN			= 19,
-	TEMP1_W_EN			= 20, //Wireless temperature thermostat
-	TEMP2_W_EN			= 21,
-	TEMP3_W_EN			= 22,
-	TEMP4_W_EN			= 23
+	TEMP1_STATUS 			= 16, //Physical temperature sensor
+	TEMP2_STATUS			= 17,
+	TEMP3_STATUS			= 18,
+	TEMP4_STATUS			= 19,
+	TEMP1_W_STATUS			= 20, //Wireless temperature thermostat
+	TEMP2_W_STATUS			= 21,
+	TEMP3_W_STATUS			= 22,
+	TEMP4_W_STATUS			= 23
 
 }coil_t;
 
-//Holding registers - can be written and read from
-static uint16_t Holding_Registers_Database[10]={
-		0000,  1111,  2222,  3333,  4444,  5555,  6666,  7777,  8888,  9999
-};
+/*typedef enum INPUT_REG_MAP
+{
 
-//Input Registers - can only be read
-static uint16_t Input_Register_Database[20] = {
-		0000,  1111,  2222,  3333,  4444,  5555,  6666,  7777,  8888,  9999
-};
+}input_reg_t;
+*/
 
-//Coil database - 1bit registers, can be written and read from
-static uint16_t Holding_Coils_Database[5]={
 
-};
 
-//Input coil database - 1bit registers, can only be read
-static  uint16_t Input_Coils_Database[5]={
-		0b0000000000000000, 0b0000000000000000
-};
+
 

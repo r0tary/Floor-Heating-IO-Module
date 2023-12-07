@@ -11,7 +11,7 @@
 #include "task.h"
 #include "queue.h"
 #include "main.h"
-#include "Modbus.h"
+//#include "Modbus.h"
 #include "timers.h"
 #include "semphr.h"
 
@@ -1146,7 +1146,9 @@ int8_t process_FC1(modbusHandler_t *modH, uint8_t Database)
     if (Database == 1){
     	u16regs = modH->u16regsCoils;
     }
-
+    else if (Database == 2){
+    	u16regs = modH->u16regsCoilsRO;
+    }
 
     for (u16currentCoil = 0; u16currentCoil < u16Coilno; u16currentCoil++)
     {

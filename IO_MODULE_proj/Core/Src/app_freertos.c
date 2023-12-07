@@ -25,16 +25,12 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
-#include "app_freertos.h"
+//#include "app_freertos.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
-#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
-#define bitSet(value, bit) ((value) |= (1UL << (bit)))
-#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-#define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
 
 
 /*------------Thread attributes/handles------------*/
@@ -90,6 +86,8 @@ const osEventFlagsAttr_t tempFlags_attributes = {
 volatile uint16_t ADCrawReading;
 volatile double ADCvoltage;
 volatile double Temperature;
+
+
 /* USER CODE END Variables */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,6 +97,22 @@ volatile double Temperature;
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+
+
+
+//IO Module Configuration function
+void IO_Module_Init(modbusHandler_t * modH)
+{
+
+	bitWrite(modH,TWA1_STATUS,TWA_1);
+	bitWrite(modH,TWA2_STATUS,TWA_2);
+	bitWrite(modH,TWA3_STATUS,TWA_3);
+	bitWrite(modH,TWA4_STATUS,TWA_4);
+
+
+}
+
+
 
 // ADC complete conversion callback
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
@@ -123,18 +137,26 @@ void Control_Thread_Init(void)
 	ControlHandle = osThreadNew(ControlTask, NULL, &Control_attributes);
 }
 
+
 // System Threads
 
 void ControlTask(void *argument){
 	// Add the control algorithm and schedule the task properly to execute every period of time
 	// TODO
 
+
 	for(;;)
 	{
+/*
+		TWA_Status = bitRead(Holding_Coils_Database[0],1);
+		if(TWA_Status != placeholder){
+			HAL_GPIO_TogglePin(TWA1_GPIO_Port, TWA1_Pin);
+			placeholder = TWA_Status;
+		}
+		osDelay(5000);
 
-
+*/
 	}
-
 }
 
 void CalculateTemp_Thread(void *argument){
@@ -153,7 +175,17 @@ void CalculateTemp_Thread(void *argument){
 	}
 
 }
-
+void bitWrite(modbusHandler_t * modH, uint8_t pos, uint8_t val)
+{
+	uint16_t *temp;
+	temp = &modH->u16regsCoilsRO[pos/16];
+	if (val == 1) {
+		*temp |= (1UL << (pos%16));
+	}
+	else {
+		*temp &= ~(1UL << (pos%16));
+	}
+}
 
 
 void Screen_Thread(void *argument){
