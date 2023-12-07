@@ -12,7 +12,6 @@
 
 #endif /* INC_APP_FREERTOS_H_ */
 
-#define bitRead(value, bit_pos) (((value) >> (bit_pos)) & 0x01)
 
 
 extern ADC_HandleTypeDef hadc1;
