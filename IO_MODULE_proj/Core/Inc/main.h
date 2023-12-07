@@ -69,6 +69,14 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOB
 #define LD3_Pin GPIO_PIN_1
 #define LD3_GPIO_Port GPIOB
+#define TWA1_Pin GPIO_PIN_12
+#define TWA1_GPIO_Port GPIOB
+#define TWA2_Pin GPIO_PIN_13
+#define TWA2_GPIO_Port GPIOB
+#define TWA3_Pin GPIO_PIN_14
+#define TWA3_GPIO_Port GPIOB
+#define TWA4_Pin GPIO_PIN_15
+#define TWA4_GPIO_Port GPIOB
 #define JTMS_Pin GPIO_PIN_13
 #define JTMS_GPIO_Port GPIOA
 #define JTCK_Pin GPIO_PIN_14

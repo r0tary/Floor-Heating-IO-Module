@@ -31,18 +31,20 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
+#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+#define bitSet(value, bit) ((value) |= (1UL << (bit)))
+#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
+#define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
+
+
+/*------------Thread attributes/handles------------*/
+
 // Temperature thread handle
 osThreadId_t TempCalcHandle;
 const osThreadAttr_t TempCalc_attributes = {
   .name = "TempCalc",
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 128 * 4
-};
-
-// Thread flags handle
-osEventFlagsId_t tempFlagsHandle;
-const osEventFlagsAttr_t tempFlags_attributes = {
-  .name = "tempFlags"
 };
 
 // Control thread handle
@@ -53,11 +55,31 @@ const osThreadAttr_t Control_attributes = {
 	  .stack_size = 128 * 4
 };
 
+<<<<<<< HEAD
 // Timer handle
 osTimerId_t controlTimerHandle;
 const osTimerAttr_t controlTimer_attributes = {
   .name = "controlTimer"
 };
+=======
+// Screen thread handle
+osThreadId_t ScreenHandle;
+const osThreadAttr_t Screen_attributes = {
+	  .name = "Screen",
+	  .priority = (osPriority_t) osPriorityLow,
+	  .stack_size = 128 * 4
+};
+
+
+/*------------Event Flags/attributes------------*/
+// Thread flags handle
+osEventFlagsId_t tempFlagsHandle;
+const osEventFlagsAttr_t tempFlags_attributes = {
+  .name = "tempFlags"
+};
+
+
+>>>>>>> 5ea67b44bedeb2c571ca773959e855f12553b2aa
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -131,6 +153,18 @@ void Control_Thread_Init(void)
 
 // System Threads
 
+void ControlTask(void *argument){
+	// Add the control algorithm and schedule the task properly to execute every period of time
+	// TODO
+
+	for(;;)
+	{
+
+
+	}
+
+}
+
 void CalculateTemp_Thread(void *argument){
 
 	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
@@ -148,6 +182,7 @@ void CalculateTemp_Thread(void *argument){
 
 }
 
+<<<<<<< HEAD
 void ControlTask(void *argument){
 	// Add the control algorithm and schedule the task properly to execute every period of time
 	// TODO
@@ -176,5 +211,16 @@ void ControlExecTim(void *argument)
 	osThreadFlagsSet(ControlHandle, 0x01);
   /* USER CODE END ControlExecTim */
 }
+=======
+
+
+void Screen_Thread(void *argument){
+
+}
+
+
+
+
+>>>>>>> 5ea67b44bedeb2c571ca773959e855f12553b2aa
 /* USER CODE END Application */
 

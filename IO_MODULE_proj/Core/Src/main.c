@@ -59,11 +59,17 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 128 * 4
 };
+<<<<<<< HEAD
 /* Definitions for controlTimer */
 
 /* USER CODE BEGIN PV */
 modbusHandler_t ModbusH;
 
+=======
+/* USER CODE BEGIN PV */
+
+modbusHandler_t ModbusH;
+>>>>>>> 5ea67b44bedeb2c571ca773959e855f12553b2aa
 
 /* USER CODE END PV */
 
@@ -151,12 +157,6 @@ int main(void)
   //Initialize the SSD1306 OLED
   //ssd1306_Init();
   //ssd1306_TestAll();
-
-
-  //TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
-  //tempFlagsHandle = osEventFlagsNew(&tempFlags_attributes);
-
-
 
   /* USER CODE END 2 */
 
@@ -543,7 +543,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LD2_Pin|LD3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LD2_Pin|LD3_Pin|TWA1_Pin|TWA2_Pin
+                          |TWA3_Pin|TWA4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : DE_EN_Pin */
   GPIO_InitStruct.Pin = DE_EN_Pin;
@@ -565,8 +566,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin LD3_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|LD3_Pin;
+  /*Configure GPIO pins : LD2_Pin LD3_Pin TWA1_Pin TWA2_Pin
+                           TWA3_Pin TWA4_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|LD3_Pin|TWA1_Pin|TWA2_Pin
+                          |TWA3_Pin|TWA4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
