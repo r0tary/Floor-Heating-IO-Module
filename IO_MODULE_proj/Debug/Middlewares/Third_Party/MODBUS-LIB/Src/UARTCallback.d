@@ -55,19 +55,15 @@ Middlewares/Third_Party/MODBUS-LIB/Src/UARTCallback.o: \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart_ex.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h \
- C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/MODBUS-LIB/Inc/Modbus.h \
+ C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/MODBUS-LIB/Inc/Modbus.h \
  ../Core/Inc/ModbusConfig.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
-<<<<<<< HEAD
  ../Core/Inc/app_freertos.h \
  C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
-=======
- C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
->>>>>>> main
  ../Core/Inc/ssd1306_conf.h \
- C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h
+ C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
@@ -124,16 +120,12 @@ Middlewares/Third_Party/MODBUS-LIB/Src/UARTCallback.o: \
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart_ex.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h:
-C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/MODBUS-LIB/Inc/Modbus.h:
+C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/MODBUS-LIB/Inc/Modbus.h:
 ../Core/Inc/ModbusConfig.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-<<<<<<< HEAD
 ../Core/Inc/app_freertos.h:
 C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
-=======
-C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
->>>>>>> main
 ../Core/Inc/ssd1306_conf.h:
-C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:
+C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:
