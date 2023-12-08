@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+../Core/Src/app_freertos.c:104:6:IO_Module_Init	16	static
+../Core/Src/app_freertos.c:118:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/app_freertos.c:127:6:ADC_Temp_Thread_Start	8	static
+../Core/Src/app_freertos.c:135:6:Control_Thread_Init	16	static
+../Core/Src/app_freertos.c:143:6:ControlTask	24	static
+../Core/Src/app_freertos.c:167:6:CalculateTemp_Thread	16	static
+../Core/Src/app_freertos.c:183:6:bitWrite	24	static
+../Core/Src/app_freertos.c:196:9:bitRead	24	static
+../Core/Src/app_freertos.c:207:6:Screen_Thread	16	static
+=======
 ../Core/Src/app_freertos.c:128:6:HAL_ADC_ConvCpltCallback	16	static
 ../Core/Src/app_freertos.c:137:6:ADC_Temp_Thread_Start	8	static
 ../Core/Src/app_freertos.c:145:6:Control_Thread_Init	8	static
@@ -5,3 +16,4 @@
 ../Core/Src/app_freertos.c:170:6:ControlTask	16	static
 ../Core/Src/app_freertos.c:191:6:ControlExecTim	16	static
 ../Core/Src/app_freertos.c:199:6:Screen_Thread	16	static
+>>>>>>> main

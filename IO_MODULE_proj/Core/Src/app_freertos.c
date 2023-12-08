@@ -25,16 +25,12 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
-#include "app_freertos.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
-#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
-#define bitSet(value, bit) ((value) |= (1UL << (bit)))
-#define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-#define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
 
 
 /*------------Thread attributes/handles------------*/
@@ -98,6 +94,7 @@ volatile double Temperature;
 
 //Control timer frequency
 #define CONTROLFREQ 1000
+
 // PID variables
 float pid_X = 0;
 float pid_Px = 0;
@@ -114,6 +111,7 @@ unsigned long last_pid_timer = 0;
 static const float KPx = 2.4;
 static const float KIx = 0.015;
 static const float KDx = 0.28;
+
 /* USER CODE END Variables */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -123,6 +121,22 @@ static const float KDx = 0.28;
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+
+
+
+//IO Module Configuration function
+void IO_Module_Init(modbusHandler_t * modH)
+{
+
+	bitWrite(modH,TWA1_STATUS,TWA_1);
+	bitWrite(modH,TWA2_STATUS,TWA_2);
+	bitWrite(modH,TWA3_STATUS,TWA_3);
+	bitWrite(modH,TWA4_STATUS,TWA_4);
+
+
+}
+
+
 
 // ADC complete conversion callback
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
@@ -142,13 +156,43 @@ void ADC_Temp_Thread_Start(void)
 
 // Initializes required components for Control algorithm thread
 
-void Control_Thread_Init(void)
+void Control_Thread_Init(modbusHandler_t *modH)
 {
-	ControlHandle = osThreadNew(ControlTask, NULL, &Control_attributes);
+	ControlHandle = osThreadNew(ControlTask, modH, &Control_attributes);
 	controlTimerHandle = osTimerNew(ControlExecTim, osTimerPeriodic, NULL, &controlTimer_attributes);
 }
 
+
 // System Threads
+
+
+void ControlTask(void *argument){
+
+	modbusHandler_t *modH = (modbusHandler_t *)argument;
+	// Add the control algorithm and schedule the task properly to execute every period of time
+	// TODO
+
+	uint8_t TWA_Status = 0;
+
+	for(;;)
+	{
+
+		TWA_Status = bitRead(modH,1);
+		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
+		osDelay(5000);
+
+		/*pid_error = //feedback(room T) - x_setpoint;
+		pid_Px = KPx * pid_error;
+		pid_Ix = pid_Ix + (KIx * pid_error);
+		pid_Dx = KDx * ((pid_error - last_x_error) / dt);
+		pid_X = pid_Px + pid_Ix + pid_Dx;
+		last_x_error = pid_error;*/
+
+		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	}
+}
+
 
 void CalculateTemp_Thread(void *argument){
 
@@ -166,25 +210,27 @@ void CalculateTemp_Thread(void *argument){
 	}
 
 }
+void bitWrite(modbusHandler_t * modH, uint8_t pos, uint8_t val)
+{
+	uint16_t *temp;
+	temp = &modH->u16regsCoilsRO[pos/16];
 
-void ControlTask(void *argument){
-	// Add the control algorithm and schedule the task properly to execute every period of time
-	// TODO
-	osTimerStart(controlTimerHandle, CONTROLFREQ);
-
-	for(;;)
-	{
-		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
-		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-		/*pid_error = //feedback(room T) - x_setpoint;
-		pid_Px = KPx * pid_error;
-		pid_Ix = pid_Ix + (KIx * pid_error);
-		pid_Dx = KDx * ((pid_error - last_x_error) / dt);
-		pid_X = pid_Px + pid_Ix + pid_Dx;
-		last_x_error = pid_error;*/
-		osDelay(1);
+	if (val == 1) {
+		*temp |= (1UL << (pos%16));
 	}
+	else {
+		*temp &= ~(1UL << (pos%16));
+	}
+}
 
+uint8_t bitRead(modbusHandler_t *modH, uint8_t pos)
+{
+	uint16_t *temp;
+	uint8_t res;
+	temp = &modH->u16regsCoils[0];
+
+	res = (*temp >> pos) & 0x01;
+	return res;
 }
 
 /* ControlExecTim function */

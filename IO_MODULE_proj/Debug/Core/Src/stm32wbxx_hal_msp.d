@@ -59,7 +59,12 @@ Core/Src/stm32wbxx_hal_msp.o: ../Core/Src/stm32wbxx_hal_msp.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
+<<<<<<< HEAD
+ ../Core/Inc/app_freertos.h \
+ C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
+=======
  C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
+>>>>>>> main
  ../Core/Inc/ssd1306_conf.h \
  C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h
 ../Core/Inc/main.h:
@@ -123,6 +128,11 @@ C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
+<<<<<<< HEAD
+../Core/Inc/app_freertos.h:
+C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
+=======
 C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
+>>>>>>> main
 ../Core/Inc/ssd1306_conf.h:
 C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:

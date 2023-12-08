@@ -26,12 +26,15 @@
 extern "C" {
 #endif
 
+#pragma once
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32wbxx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Modbus.h"
+#include "app_freertos.h"
 #include "ssd1306.h"
 
 /* USER CODE END Includes */
@@ -57,6 +60,27 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
+//Holding registers - can be written and read from
+static uint16_t Holding_Registers_Database[10]={
+		0000,  1111,  2222,  3333,  4444,  5555,  6666,  7777,  8888,  9999
+};
+
+//Input Registers - can only be read
+static uint16_t Input_Register_Database[20] = {
+		0000,  1111,  2222,  3333,  4444,  5555,  6666,  7777,  8888,  9999
+};
+
+//Coil database - 1bit registers, can be written and read from
+static uint16_t Holding_Coils_Database[5]={
+		0b0000000000000010
+};
+
+//Input coil database - 1bit registers, can only be read
+static  uint16_t Input_Coils_Database[5]={
+			0b0000000000000000, 0b0000000000000000
+};
+
+
 
 /* USER CODE END EFP */
 
