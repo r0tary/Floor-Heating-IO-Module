@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "app_freertos.h"
+//#include "app_freertos.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -127,6 +127,7 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
+
   ModbusH.uModbusType = MB_SLAVE;
   ModbusH.port = &huart1;
   ModbusH.u8id = 1;
@@ -140,8 +141,11 @@ int main(void)
   ModbusH.u16regHR_size = sizeof(Holding_Registers_Database)/sizeof(Holding_Registers_Database[0]);
   ModbusH.u16regRO_size = sizeof(Input_Register_Database)/sizeof(Input_Register_Database[0]);
   ModbusH.u16regCoils_size = sizeof(Holding_Coils_Database)/sizeof(Holding_Coils_Database[0]);
-  ModbusH.u16regCoilsRO_size = sizeof(Input_Coils_Database)/sizeof(Input_Coils_Database[0]);
+  //ModbusH.u16regCoilsRO_size = sizeof(Input_Coils_Database)/sizeof(Input_Coils_Database[0]);
   ModbusH.xTypeHW = USART_HW_DMA;
+
+  IO_Module_Init(&ModbusH);
+  Control_Thread_Init(&ModbusH);
 
   //Initialize MODBUS library
   ModbusInit(&ModbusH);
@@ -185,7 +189,7 @@ int main(void)
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   ADC_Temp_Thread_Start();
-  Control_Thread_Init();
+
   /* USER CODE END RTOS_THREADS */
 
   /* USER CODE BEGIN RTOS_EVENTS */
@@ -595,7 +599,9 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN 5 */
   /* Infinite loop */
-  for(;;)
+
+
+for(;;)
   {
     osDelay(1);
   }

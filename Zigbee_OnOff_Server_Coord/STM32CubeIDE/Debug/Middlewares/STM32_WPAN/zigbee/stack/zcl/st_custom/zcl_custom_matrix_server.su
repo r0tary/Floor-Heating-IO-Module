@@ -1,0 +1,3 @@
+../Middlewares/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_matrix_server.c:34:1:ZbZcl_custom_matrix_ServerAlloc	40	static
+../Middlewares/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_matrix_server.c:66:1:custom_matrix_command_handler	80	static
+../Middlewares/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_matrix_server.c:109:1:ZbZcl_custom_matrix_ServerSendCommandRsp	48	static
