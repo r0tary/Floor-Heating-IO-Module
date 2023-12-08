@@ -1,0 +1,3 @@
+../Middlewares/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_ls_server.c:33:1:ZbZcl_custom_ls_ServerAlloc	3
+../Middlewares/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_ls_server.c:71:1:custom_ls_command_handler	3
+../Middlewares/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_ls_server.c:116:1:ZbZcl_custom_ls_ServerSendCommandRsp	1

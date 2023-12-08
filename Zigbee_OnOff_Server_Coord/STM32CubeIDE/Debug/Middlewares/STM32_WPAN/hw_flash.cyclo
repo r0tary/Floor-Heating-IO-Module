@@ -1,0 +1,4 @@
+C:/Users/Virtualiden/STM32Cube/Repository/STM32Cube_FW_WB_V1.17.2/Middlewares/ST/STM32_WPAN/zigbee/platform/hw_flash.c:27:5:HW_FLASH_Write	1
+C:/Users/Virtualiden/STM32Cube/Repository/STM32Cube_FW_WB_V1.17.2/Middlewares/ST/STM32_WPAN/zigbee/platform/hw_flash.c:50:5:HW_FLASH_Erase	2
+C:/Users/Virtualiden/STM32Cube/Repository/STM32Cube_FW_WB_V1.17.2/Middlewares/ST/STM32_WPAN/zigbee/platform/hw_flash.c:88:13:HW_FLASH_Program_DoubleWord	1
+C:/Users/Virtualiden/STM32Cube/Repository/STM32Cube_FW_WB_V1.17.2/Middlewares/ST/STM32_WPAN/zigbee/platform/hw_flash.c:111:13:HW_FLASH_PageErase	1

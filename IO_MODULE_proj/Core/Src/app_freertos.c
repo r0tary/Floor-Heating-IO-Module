@@ -47,8 +47,14 @@ const osThreadAttr_t TempCalc_attributes = {
 osThreadId_t ControlHandle;
 const osThreadAttr_t Control_attributes = {
 	  .name = "Control",
-	  .priority = (osPriority_t) osPriorityLow,
+	  .priority = (osPriority_t) osPriorityNormal,
 	  .stack_size = 128 * 4
+};
+
+// Timer handle
+osTimerId_t controlTimerHandle;
+const osTimerAttr_t controlTimer_attributes = {
+  .name = "controlTimer"
 };
 
 // Screen thread handle
@@ -66,7 +72,6 @@ osEventFlagsId_t tempFlagsHandle;
 const osEventFlagsAttr_t tempFlags_attributes = {
   .name = "tempFlags"
 };
-
 
 /* USER CODE END PTD */
 
@@ -87,6 +92,25 @@ volatile uint16_t ADCrawReading;
 volatile double ADCvoltage;
 volatile double Temperature;
 
+//Control timer frequency
+#define CONTROLFREQ 1000
+
+// PID variables
+float pid_X = 0;
+float pid_Px = 0;
+float pid_Ix = 0;
+float pid_Dx = 0;
+int x_setpoint = 0;
+float pid_error = 0;
+float last_x_error = 0;
+float dt = 0;
+unsigned long currentTime = 0;
+unsigned long last_pid_timer = 0;
+
+// PID tuning parameters
+static const float KPx = 2.4;
+static const float KIx = 0.015;
+static const float KDx = 0.28;
 
 /* USER CODE END Variables */
 
@@ -135,10 +159,12 @@ void ADC_Temp_Thread_Start(void)
 void Control_Thread_Init(modbusHandler_t *modH)
 {
 	ControlHandle = osThreadNew(ControlTask, modH, &Control_attributes);
+	controlTimerHandle = osTimerNew(ControlExecTim, osTimerPeriodic, NULL, &controlTimer_attributes);
 }
 
 
 // System Threads
+
 
 void ControlTask(void *argument){
 
@@ -152,14 +178,21 @@ void ControlTask(void *argument){
 	{
 
 		TWA_Status = bitRead(modH,1);
-
-
 		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
-
 		osDelay(5000);
 
+		/*pid_error = //feedback(room T) - x_setpoint;
+		pid_Px = KPx * pid_error;
+		pid_Ix = pid_Ix + (KIx * pid_error);
+		pid_Dx = KDx * ((pid_error - last_x_error) / dt);
+		pid_X = pid_Px + pid_Ix + pid_Dx;
+		last_x_error = pid_error;*/
+
+		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 	}
 }
+
 
 void CalculateTemp_Thread(void *argument){
 
@@ -173,7 +206,7 @@ void CalculateTemp_Thread(void *argument){
 		ADCvoltage = ADCrawReading * 0.00073242;
 		Temperature = ((ADCvoltage - 0.408)*100) / 2.04;
 		HAL_ADC_Stop_DMA(&hadc1);
-		osDelay(2);
+		osDelay(1);
 	}
 
 }
@@ -200,12 +233,18 @@ uint8_t bitRead(modbusHandler_t *modH, uint8_t pos)
 	return res;
 }
 
+/* ControlExecTim function */
+void ControlExecTim(void *argument)
+{
+  /* USER CODE BEGIN ControlExecTim */
+	//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+	osThreadFlagsSet(ControlHandle, 0x01);
+  /* USER CODE END ControlExecTim */
+}
 
 void Screen_Thread(void *argument){
 
 }
-
-
 
 
 /* USER CODE END Application */

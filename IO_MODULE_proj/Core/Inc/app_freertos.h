@@ -33,7 +33,7 @@ extern osThreadId_t ScreenHandle;
 extern void CalculateTemp_Thread(void *argument);
 extern void ControlTask(void *argument);
 extern void Screen_Thread(void *argument);
-
+void ControlExecTim(void *argument);
 
 //Event handles and attributes
 extern osEventFlagsId_t tempFlagsHandle;
@@ -43,6 +43,7 @@ extern osEventFlagsId_t tempFlagsHandle;
 
 //Function prototypes
 void ADC_Temp_Thread_Start(void);
+
 void Control_Thread_Init(modbusHandler_t *modH);
 void IO_Module_Init(modbusHandler_t * modH);
 void bitWrite(modbusHandler_t *modH, uint8_t pos, uint8_t val);
@@ -63,6 +64,9 @@ uint8_t bitRead(modbusHandler_t *modH, uint8_t pos);
 #define PT1000_2		0
 #define PT1000_3		0
 #define PT1000_4		0
+
+
+
 
 
 //Coil map, number indicates the coil number
