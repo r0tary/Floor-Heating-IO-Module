@@ -81,7 +81,7 @@ void StartDefaultTask(void *argument);
 void ControlExecTim(void *argument);
 
 /* USER CODE BEGIN PFP */
-void CalculateTemp_Thread(void *argument);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/

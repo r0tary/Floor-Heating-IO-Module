@@ -98,6 +98,7 @@ volatile double Temperature;
 
 //Control timer frequency
 #define CONTROLFREQ 1000
+
 // PID variables
 float pid_X = 0;
 float pid_Px = 0;
