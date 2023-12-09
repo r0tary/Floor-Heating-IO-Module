@@ -168,6 +168,7 @@ void Control_Thread_Init(modbusHandler_t *modH)
 
 void ControlTask(void *argument){
 
+	osTimerStart(controlTimerHandle, CONTROLFREQ);
 	modbusHandler_t *modH = (modbusHandler_t *)argument;
 	// Add the control algorithm and schedule the task properly to execute every period of time
 	// TODO
@@ -176,17 +177,21 @@ void ControlTask(void *argument){
 
 	for(;;)
 	{
-
-		TWA_Status = bitRead(modH,1);
-		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
-		osDelay(5000);
-
 		/*pid_error = //feedback(room T) - x_setpoint;
 		pid_Px = KPx * pid_error;
 		pid_Ix = pid_Ix + (KIx * pid_error);
 		pid_Dx = KDx * ((pid_error - last_x_error) / dt);
 		pid_X = pid_Px + pid_Ix + pid_Dx;
 		last_x_error = pid_error;*/
+
+		// Request room temperature ¿Function?, run control algorithm and get an output
+		// Check output and change state of the TWA based on it.
+		// Run this loop every 1 second
+
+		TWA_Status = bitRead(modH,1);
+		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
+		osDelay(5000);
+
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
