@@ -3,8 +3,8 @@
 ../Core/Src/app_freertos.c:151:6:ADC_Temp_Thread_Start	8	static
 ../Core/Src/app_freertos.c:159:6:Control_Thread_Init	16	static
 ../Core/Src/app_freertos.c:169:6:ControlTask	24	static
-../Core/Src/app_freertos.c:202:6:CalculateTemp_Thread	16	static
-../Core/Src/app_freertos.c:218:6:bitWrite	24	static
-../Core/Src/app_freertos.c:231:9:bitRead	24	static
-../Core/Src/app_freertos.c:242:6:ControlExecTim	16	static
-../Core/Src/app_freertos.c:250:6:Screen_Thread	16	static
+../Core/Src/app_freertos.c:196:6:CalculateTemp_Thread	16	static
+../Core/Src/app_freertos.c:212:6:bitWrite	24	static
+../Core/Src/app_freertos.c:225:9:bitRead	24	static
+../Core/Src/app_freertos.c:236:6:ControlExecTim	16	static
+../Core/Src/app_freertos.c:244:6:Screen_Thread	16	static
