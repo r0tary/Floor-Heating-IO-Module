@@ -26,8 +26,6 @@
 extern "C" {
 #endif
 
-#pragma once
-
 /* Includes ------------------------------------------------------------------*/
 #include "stm32wbxx_hal.h"
 

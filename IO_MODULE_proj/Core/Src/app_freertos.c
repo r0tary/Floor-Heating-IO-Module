@@ -88,9 +88,9 @@ const osEventFlagsAttr_t tempFlags_attributes = {
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-volatile uint16_t ADCrawReading;
-volatile double ADCvoltage;
-volatile double Temperature;
+volatile uint16_t ADCrawReading[2];
+volatile double ADCvoltage[2];
+volatile double Temperature[2];
 
 //Control timer frequency
 #define CONTROLFREQ 1000
@@ -185,7 +185,7 @@ void ControlTask(void *argument){
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-		PID0_step(Temperature);
+		PID0_step(Temperature[0]);
 	}
 }
 
@@ -196,11 +196,13 @@ void CalculateTemp_Thread(void *argument){
 
 	for(;;)
 	{
-		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,1);
+		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,2);
 		//osEventFlagsWait(tempFlagsHandle, 0x01, osFlagsWaitAll, osWaitForever);
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
-		ADCvoltage = ADCrawReading * 0.00073242;
-		Temperature = ((ADCvoltage - 0.408)*100) / 2.04;
+		ADCvoltage[0] = ADCrawReading[0] * 0.00073242;
+		Temperature[0] = ((ADCvoltage[0] - 0.408)*100) / 2.04;
+		ADCvoltage[1] = ADCrawReading[1] * 0.00073242;
+		Temperature[1] = ((ADCvoltage[1] - 0.408)*100) / 2.04;
 		HAL_ADC_Stop_DMA(&hadc1);
 		osDelay(1);
 	}
