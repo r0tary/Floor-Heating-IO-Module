@@ -1,6 +1,6 @@
 Middlewares/Third_Party/OLED_SSD1306/Src/ssd1306_tests.o: \
  ../Middlewares/Third_Party/OLED_SSD1306/Src/ssd1306_tests.c \
- C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
+ C:/Users/Virtualiden/Documents/GitHub/Floor-Heating-IO-Module/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
  ../Core/Inc/ssd1306_conf.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h \
  ../Core/Inc/stm32wbxx_hal_conf.h \
@@ -46,9 +46,9 @@ Middlewares/Third_Party/OLED_SSD1306/Src/ssd1306_tests.o: \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart_ex.h \
  ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h \
- C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h \
- C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_tests.h
-C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
+ C:/Users/Virtualiden/Documents/GitHub/Floor-Heating-IO-Module/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h \
+ C:/Users/Virtualiden/Documents/GitHub/Floor-Heating-IO-Module/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_tests.h
+C:/Users/Virtualiden/Documents/GitHub/Floor-Heating-IO-Module/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
 ../Core/Inc/ssd1306_conf.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h:
 ../Core/Inc/stm32wbxx_hal_conf.h:
@@ -94,5 +94,5 @@ C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal_uart_ex.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_ll_system.h:
-C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:
-C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_tests.h:
+C:/Users/Virtualiden/Documents/GitHub/Floor-Heating-IO-Module/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:
+C:/Users/Virtualiden/Documents/GitHub/Floor-Heating-IO-Module/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_tests.h:

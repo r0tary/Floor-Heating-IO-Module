@@ -1,0 +1,15 @@
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:17:1:is_little_endian	16	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:35:1:pletoh16	16	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:42:1:pletoh24	16	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:49:1:pletoh32	24	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:56:1:pletoh40	40	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:63:1:pletoh48	32	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:70:1:pletoh56	32	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:77:1:pletoh64	40	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:88:1:putle16	16	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:96:1:putle24	16	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:104:1:putle32	16	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:112:1:putle40	24	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:120:1:putle48	24	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:128:1:putle56	24	static
+../Middlewares/ST/STM32_WPAN/zigbee/stack/pletoh.c:136:1:putle64	24	static

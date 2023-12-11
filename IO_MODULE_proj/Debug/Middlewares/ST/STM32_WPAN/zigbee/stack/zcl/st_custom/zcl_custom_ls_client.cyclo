@@ -1,0 +1,2 @@
+../Middlewares/ST/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_ls_client.c:31:1:ZbZcl_custom_ls_ClientAlloc	2
+../Middlewares/ST/STM32_WPAN/zigbee/stack/zcl/st_custom/zcl_custom_ls_client.c:52:1:ZbZclSet_custom_ls_ClientCommand	2

@@ -15,6 +15,10 @@ RM := rm -rf
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
+-include Middlewares/ST/STM32_WPAN/zigbee/stack/subdir.mk
+-include Middlewares/ST/STM32_WPAN/zigbee/platform/subdir.mk
+-include Middlewares/ST/STM32_WPAN/zigbee/core/src/subdir.mk
+-include Middlewares/ST/STM32_WPAN/utilities/subdir.mk
 -include Drivers/STM32WBxx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -66,8 +70,8 @@ all: main-build
 main-build: IO_Module_proj.elf secondary-outputs
 
 # Tool invocations
-IO_Module_proj.elf IO_Module_proj.map: $(OBJS) $(USER_OBJS) C:\Users\ivand\OneDrive\Uni\ SDU\5\ Semester\Expert\ in\ Teams\FLOOR-HEATING-IO-MODULE\IO_MODULE_proj\STM32WB55RGVX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "IO_Module_proj.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ivand\OneDrive\Uni SDU\5 Semester\Expert in Teams\FLOOR-HEATING-IO-MODULE\IO_MODULE_proj\STM32WB55RGVX_FLASH.ld" --specs=nosys.specs -Wl,-Map="IO_Module_proj.map" -Wl,--gc-sections -static -L"C:\Users\ivand\OneDrive\Uni SDU\5 Semester\Expert in Teams\FLOOR-HEATING-IO-MODULE\IO_MODULE_proj\Middlewares\Third_Party\MODBUS-LIB" -L"C:\Users\ivand\OneDrive\Uni SDU\5 Semester\Expert in Teams\FLOOR-HEATING-IO-MODULE\IO_MODULE_proj\Middlewares\Third_Party\OLED_SSD1306" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+IO_Module_proj.elf IO_Module_proj.map: $(OBJS) $(USER_OBJS) C:\Users\Virtualiden\Documents\GitHub\Floor-Heating-IO-Module\IO_MODULE_proj\STM32WB55RGVX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "IO_Module_proj.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Virtualiden\Documents\GitHub\Floor-Heating-IO-Module\IO_MODULE_proj\STM32WB55RGVX_FLASH.ld" --specs=nosys.specs -Wl,-Map="IO_Module_proj.map" -Wl,--gc-sections -static -L"C:\Users\Virtualiden\Documents\GitHub\Floor-Heating-IO-Module\IO_MODULE_proj\Middlewares\Third_Party\MODBUS-LIB" -L"C:\Users\Virtualiden\Documents\GitHub\Floor-Heating-IO-Module\IO_MODULE_proj\Middlewares\Third_Party\OLED_SSD1306" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -69,8 +69,8 @@ all: main-build
 main-build: Zigbee_OnOff_Server_Coord.elf secondary-outputs
 
 # Tool invocations
-Zigbee_OnOff_Server_Coord.elf Zigbee_OnOff_Server_Coord.map: $(OBJS) $(USER_OBJS) C:\Users\Virtualiden\STM32Cube\Repository\STM32Cube_FW_WB_V1.17.2\Projects\P-NUCLEO-WB55.Nucleo\Applications\Zigbee\Zigbee_OnOff_Server_Coord\STM32CubeIDE\STM32WB55RGVX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Zigbee_OnOff_Server_Coord.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Virtualiden\STM32Cube\Repository\STM32Cube_FW_WB_V1.17.2\Projects\P-NUCLEO-WB55.Nucleo\Applications\Zigbee\Zigbee_OnOff_Server_Coord\STM32CubeIDE\STM32WB55RGVX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Zigbee_OnOff_Server_Coord.map" -Wl,--gc-sections -static -L../../../../../../../Middlewares/ST/STM32_WPAN/zigbee/lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Zigbee_OnOff_Server_Coord.elf Zigbee_OnOff_Server_Coord.map: $(OBJS) $(USER_OBJS) C:\Users\Virtualiden\Documents\GitHub\Floor-Heating-IO-Module\Zigbee_OnOff_Server_Coord\STM32CubeIDE\STM32WB55RGVX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Zigbee_OnOff_Server_Coord.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Virtualiden\Documents\GitHub\Floor-Heating-IO-Module\Zigbee_OnOff_Server_Coord\STM32CubeIDE\STM32WB55RGVX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Zigbee_OnOff_Server_Coord.map" -Wl,--gc-sections -static -L../../../../../../../Middlewares/ST/STM32_WPAN/zigbee/lib --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

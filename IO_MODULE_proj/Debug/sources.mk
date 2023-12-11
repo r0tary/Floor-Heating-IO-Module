@@ -25,6 +25,10 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32WBxx_HAL_Driver/Src \
+Middlewares/ST/STM32_WPAN/utilities \
+Middlewares/ST/STM32_WPAN/zigbee/core/src \
+Middlewares/ST/STM32_WPAN/zigbee/platform \
+Middlewares/ST/STM32_WPAN/zigbee/stack \
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 \
 Middlewares/Third_Party/FreeRTOS/Source \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F \
