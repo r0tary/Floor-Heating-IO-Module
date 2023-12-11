@@ -34,7 +34,6 @@
 
 
 /*------------Thread attributes/handles------------*/
-
 // Temperature thread handle
 osThreadId_t TempCalcHandle;
 const osThreadAttr_t TempCalc_attributes = {
@@ -51,18 +50,19 @@ const osThreadAttr_t Control_attributes = {
 	  .stack_size = 128 * 4
 };
 
-// Timer handle
-osTimerId_t controlTimerHandle;
-const osTimerAttr_t controlTimer_attributes = {
-  .name = "controlTimer"
-};
-
 // Screen thread handle
 osThreadId_t ScreenHandle;
 const osThreadAttr_t Screen_attributes = {
 	  .name = "Screen",
 	  .priority = (osPriority_t) osPriorityLow,
 	  .stack_size = 128 * 4
+};
+
+/*------------Thread attributes/handles------------*/
+// Timer handle
+osTimerId_t controlTimerHandle;
+const osTimerAttr_t controlTimer_attributes = {
+  .name = "controlTimer"
 };
 
 
@@ -125,14 +125,18 @@ static const float KDx = 0.28;
 
 
 //IO Module Configuration function
-void IO_Module_Init(modbusHandler_t * modH)
+void IO_Module_Init(io_module_t * IO)
 {
 
-	bitWrite(modH,TWA1_STATUS,TWA_1);
-	bitWrite(modH,TWA2_STATUS,TWA_2);
-	bitWrite(modH,TWA3_STATUS,TWA_3);
-	bitWrite(modH,TWA4_STATUS,TWA_4);
+	bitWrite(IO,TWA1_STATUS,TWA_1);
+	bitWrite(IO,TWA2_STATUS,TWA_2);
+	bitWrite(IO,TWA3_STATUS,TWA_3);
+	bitWrite(IO,TWA4_STATUS,TWA_4);
 
+	bitWrite(IO,TEMP1_STATUS,PT1k_1);
+	bitWrite(IO,TEMP2_STATUS,PT1k_2);
+	bitWrite(IO,TEMP3_STATUS,PT1k_3);
+	bitWrite(IO,TEMP4_STATUS,PT1k_4);
 
 }
 
@@ -156,27 +160,27 @@ void ADC_Temp_Thread_Start(void)
 
 // Initializes required components for Control algorithm thread
 
-void Control_Thread_Init(modbusHandler_t *modH)
+void Control_Thread_Init(io_module_t *IO)
 {
-	ControlHandle = osThreadNew(ControlTask, modH, &Control_attributes);
+	ControlHandle = osThreadNew(ControlTask, IO, &Control_attributes);
 	controlTimerHandle = osTimerNew(ControlExecTim, osTimerPeriodic, NULL, &controlTimer_attributes);
 }
 
-
-// System Threads
-
-
+#if MODE == 0
 void ControlTask(void *argument){
+<<<<<<< Updated upstream
 
+=======
+	osTimerStart(controlTimerHandle, CONTROLFREQ);
+>>>>>>> Stashed changes
 	modbusHandler_t *modH = (modbusHandler_t *)argument;
 	// Add the control algorithm and schedule the task properly to execute every period of time
 	// TODO
 
-	uint8_t TWA_Status = 0;
-
 	for(;;)
 	{
 
+<<<<<<< Updated upstream
 		TWA_Status = bitRead(modH,1);
 		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
 		osDelay(5000);
@@ -187,12 +191,58 @@ void ControlTask(void *argument){
 		pid_Dx = KDx * ((pid_error - last_x_error) / dt);
 		pid_X = pid_Px + pid_Ix + pid_Dx;
 		last_x_error = pid_error;*/
+=======
+		// Request room temperature ¿Function?, run control algorithm and get an output
+		// Check output and change state of the TWA based on it.
+		// Run this loop every 1 second
+>>>>>>> Stashed changes
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 	}
 }
+#endif
+#if MODE == 1
 
+void ControlTask(void *argument){
+	io_module_t *IO = (io_module_t *)argument;
+	uint8_t TWA_Status = 0;
+
+	for(;;)
+	{
+
+		if (bitRead(IO->u16regsCoilsRO,TWA1_STATUS) == true){
+			TWA_Status = bitRead(IO->u16regsCoils,TWA1_EN);
+			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin,TWA_Status);
+			bitWrite(IO, TWA1_EN, TWA_Status);
+		}
+
+		if (bitRead(IO->u16regsCoilsRO,TWA2_STATUS) == true){
+			TWA_Status = bitRead(IO->u16regsCoils,TWA2_EN);
+			HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
+			bitWrite(IO, TWA2_EN, TWA_Status);
+		}
+
+		if (bitRead(IO->u16regsCoilsRO,TWA3_STATUS) == true){
+			TWA_Status = bitRead(IO->u16regsCoils,TWA3_EN);
+			HAL_GPIO_WritePin(TWA3_GPIO_Port, TWA3_Pin,TWA_Status);
+			bitWrite(IO, TWA3_EN, TWA_Status);
+		}
+
+		if (bitRead(IO->u16regsCoilsRO,TWA4_STATUS) == true){
+			TWA_Status = bitRead(IO->u16regsCoils,TWA4_EN);
+			HAL_GPIO_WritePin(TWA4_GPIO_Port, TWA4_Pin,TWA_Status);
+			bitWrite(IO, TWA4_EN, TWA_Status);
+		}
+
+		osDelay(5000);
+	}
+}
+#endif
+#if MODE == 2
+
+
+#endif
 
 void CalculateTemp_Thread(void *argument){
 
@@ -210,10 +260,10 @@ void CalculateTemp_Thread(void *argument){
 	}
 
 }
-void bitWrite(modbusHandler_t * modH, uint8_t pos, uint8_t val)
+void bitWrite(io_module_t * IO, uint8_t pos, uint8_t val)
 {
 	uint16_t *temp;
-	temp = &modH->u16regsCoilsRO[pos/16];
+	temp = &IO->u16regsCoilsRO[pos/16];
 
 	if (val == 1) {
 		*temp |= (1UL << (pos%16));
@@ -223,13 +273,15 @@ void bitWrite(modbusHandler_t * modH, uint8_t pos, uint8_t val)
 	}
 }
 
-uint8_t bitRead(modbusHandler_t *modH, uint8_t pos)
+uint8_t bitRead(uint16_t *Coils, uint8_t coilNr)
 {
-	uint16_t *temp;
-	uint8_t res;
-	temp = &modH->u16regsCoils[0];
+	uint16_t temp;
+	uint8_t res, pos;
 
-	res = (*temp >> pos) & 0x01;
+	pos = coilNr - ((coilNr/16)*16);
+	temp = Coils[coilNr/16];
+	res = (temp >> pos ) & 0x01;
+
 	return res;
 }
 
