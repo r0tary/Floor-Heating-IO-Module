@@ -1,3 +1,4 @@
+"./Core/Src/PID0.o"
 "./Core/Src/app_freertos.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32wbxx_hal_msp.o"

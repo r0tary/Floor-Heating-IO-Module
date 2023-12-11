@@ -60,8 +60,8 @@ Middlewares/Third_Party/MODBUS-LIB/Src/UARTCallback.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
-<<<<<<< HEAD
  ../Core/Inc/app_freertos.h \
+<<<<<<< HEAD
  C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
 <<<<<<< Updated upstream
 =======
@@ -69,6 +69,9 @@ Middlewares/Third_Party/MODBUS-LIB/Src/UARTCallback.o: \
 >>>>>>> main
 =======
 >>>>>>> Stashed changes
+=======
+ C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
+>>>>>>> main
  ../Core/Inc/ssd1306_conf.h \
  C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
@@ -132,8 +135,8 @@ C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/M
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-<<<<<<< HEAD
 ../Core/Inc/app_freertos.h:
+<<<<<<< HEAD
 C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
 <<<<<<< Updated upstream
 =======
@@ -141,5 +144,8 @@ C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-
 >>>>>>> main
 =======
 >>>>>>> Stashed changes
+=======
+C:/Users/ivand/OneDrive/Uni\ SDU/5\ Semester/Expert\ in\ Teams/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
+>>>>>>> main
 ../Core/Inc/ssd1306_conf.h:
 C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:

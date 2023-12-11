@@ -25,7 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
-
+#include "PID0.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,9 +88,9 @@ const osEventFlagsAttr_t tempFlags_attributes = {
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-volatile uint16_t ADCrawReading;
-volatile double ADCvoltage;
-volatile double Temperature;
+volatile uint16_t ADCrawReading[2];
+volatile double ADCvoltage[2];
+volatile double Temperature[2];
 
 //Control timer frequency
 #define CONTROLFREQ 1000
@@ -108,9 +108,6 @@ unsigned long currentTime = 0;
 unsigned long last_pid_timer = 0;
 
 // PID tuning parameters
-static const float KPx = 2.4;
-static const float KIx = 0.015;
-static const float KDx = 0.28;
 
 /* USER CODE END Variables */
 
@@ -127,7 +124,6 @@ static const float KDx = 0.28;
 //IO Module Configuration function
 void IO_Module_Init(io_module_t * IO)
 {
-
 	bitWrite(IO,TWA1_STATUS,TWA_1);
 	bitWrite(IO,TWA2_STATUS,TWA_2);
 	bitWrite(IO,TWA3_STATUS,TWA_3);
@@ -137,7 +133,6 @@ void IO_Module_Init(io_module_t * IO)
 	bitWrite(IO,TEMP2_STATUS,PT1k_2);
 	bitWrite(IO,TEMP3_STATUS,PT1k_3);
 	bitWrite(IO,TEMP4_STATUS,PT1k_4);
-
 }
 
 
@@ -145,10 +140,8 @@ void IO_Module_Init(io_module_t * IO)
 // ADC complete conversion callback
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-
 	//osEventFlagsSet(tempFlagsHandle,0x01);
 	osThreadFlagsSet(TempCalcHandle, 0x01);
-
 }
 
 // Initializes the thread and event flags in charge of calculating the temperature values form PT1000
@@ -168,37 +161,31 @@ void Control_Thread_Init(io_module_t *IO)
 
 #if MODE == 0
 void ControlTask(void *argument){
-<<<<<<< Updated upstream
-
-=======
 	osTimerStart(controlTimerHandle, CONTROLFREQ);
->>>>>>> Stashed changes
-	modbusHandler_t *modH = (modbusHandler_t *)argument;
+	io_module_t *IO = (io_module_t *)argument;
 	// Add the control algorithm and schedule the task properly to execute every period of time
 	// TODO
 
 	for(;;)
 	{
-
-<<<<<<< Updated upstream
-		TWA_Status = bitRead(modH,1);
-		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
-		osDelay(5000);
-
 		/*pid_error = //feedback(room T) - x_setpoint;
 		pid_Px = KPx * pid_error;
 		pid_Ix = pid_Ix + (KIx * pid_error);
 		pid_Dx = KDx * ((pid_error - last_x_error) / dt);
 		pid_X = pid_Px + pid_Ix + pid_Dx;
 		last_x_error = pid_error;*/
-=======
+
 		// Request room temperature ¿Function?, run control algorithm and get an output
 		// Check output and change state of the TWA based on it.
 		// Run this loop every 1 second
->>>>>>> Stashed changes
+
+		/*TWA_Status = bitRead(modH,1);
+		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
+		osDelay(5000);*/
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		PID0_step(Temperature[0]);
 	}
 }
 #endif
@@ -250,17 +237,21 @@ void CalculateTemp_Thread(void *argument){
 
 	for(;;)
 	{
-		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,1);
+		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,2);
 		//osEventFlagsWait(tempFlagsHandle, 0x01, osFlagsWaitAll, osWaitForever);
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
-		ADCvoltage = ADCrawReading * 0.00073242;
-		Temperature = ((ADCvoltage - 0.408)*100) / 2.04;
+		ADCvoltage[0] = ADCrawReading[0] * 0.00073242;
+		Temperature[0] = ((ADCvoltage[0] - 0.408)*100) / 2.04;
+		ADCvoltage[1] = ADCrawReading[1] * 0.00073242;
+		Temperature[1] = ((ADCvoltage[1] - 0.408)*100) / 2.04;
 		HAL_ADC_Stop_DMA(&hadc1);
 		osDelay(1);
 	}
 
 }
+
 void bitWrite(io_module_t * IO, uint8_t pos, uint8_t val)
+// Temperature = (((ADCrawReading * 0.00073242) - 0.408)*100) / 2.04;
 {
 	uint16_t *temp;
 	temp = &IO->u16regsCoilsRO[pos/16];
