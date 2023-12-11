@@ -7,16 +7,12 @@
 
 #ifndef INC_APP_FREERTOS_H_
 #define INC_APP_FREERTOS_H_
-
-
-
 #endif /* INC_APP_FREERTOS_H_ */
-//#pragma message ("app freertos inclued")
 
-//#define bitRead(value, bit) (((value) >> (bit)) & 0x01)
+
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
-//#define bitWrite(value, bit, bitvalue) ((bitvalue) ? bitSet(value, bit) : bitClear(value, bit))
+
 
 extern ADC_HandleTypeDef hadc1;
 
@@ -40,14 +36,21 @@ extern osEventFlagsId_t tempFlagsHandle;
 	extern const osEventFlagsAttr_t tempFlags_attributes;
 
 
+typedef struct
+	{
+		uint16_t *u16regsHR;
+		uint16_t *u16regsRO;
+		uint16_t *u16regsCoils;
+		uint16_t *u16regsCoilsRO;
+	}io_module_t;
+
 
 //Function prototypes
 void ADC_Temp_Thread_Start(void);
-
-void Control_Thread_Init(modbusHandler_t *modH);
-void IO_Module_Init(modbusHandler_t * modH);
-void bitWrite(modbusHandler_t *modH, uint8_t pos, uint8_t val);
-uint8_t bitRead(modbusHandler_t *modH, uint8_t pos);
+void Control_Thread_Init(io_module_t *IO);
+void IO_Module_Init(io_module_t *IO);
+void bitWrite(io_module_t *IO, uint8_t pos, uint8_t val);
+uint8_t bitRead(uint16_t *IO, uint8_t coilNR);
 
 
 
@@ -60,10 +63,21 @@ uint8_t bitRead(modbusHandler_t *modH, uint8_t pos);
 #define TWA_4			1
 
 //PT1000 temp sensor configuration, 0 = NOT connected, 1 = connected
-#define PT1000_1		0
-#define PT1000_2		0
-#define PT1000_3		0
-#define PT1000_4		0
+#define PT1k_1		0
+#define PT1k_2		0
+#define PT1k_3		0
+#define PT1k_4		0
+
+
+
+typedef enum MODES
+{
+	STANDART			= 0,
+	TEST_TWA			= 1,
+	TEST_PID			= 2
+}mode_t;
+
+#define MODE 1
 
 
 
@@ -89,7 +103,6 @@ typedef enum COIL_MAP
 	TEMP2_W_STATUS			= 21,
 	TEMP3_W_STATUS			= 22,
 	TEMP4_W_STATUS			= 23
-
 }coil_t;
 
 /*typedef enum INPUT_REG_MAP

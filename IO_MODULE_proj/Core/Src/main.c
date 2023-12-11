@@ -61,7 +61,7 @@ const osThreadAttr_t defaultTask_attributes = {
 };
 /* USER CODE BEGIN PV */
 modbusHandler_t ModbusH;
-
+io_module_t  IOmodule;
 
 /* USER CODE END PV */
 
@@ -123,6 +123,10 @@ int main(void)
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
 
+  IOmodule.u16regsHR = Holding_Registers_Database;
+  IOmodule.u16regsRO = Input_Register_Database;
+  IOmodule.u16regsCoils = Holding_Coils_Database;
+  IOmodule.u16regsCoilsRO = Input_Coils_Database;
 
   ModbusH.uModbusType = MB_SLAVE;
   ModbusH.port = &huart1;
@@ -137,11 +141,11 @@ int main(void)
   ModbusH.u16regHR_size = sizeof(Holding_Registers_Database)/sizeof(Holding_Registers_Database[0]);
   ModbusH.u16regRO_size = sizeof(Input_Register_Database)/sizeof(Input_Register_Database[0]);
   ModbusH.u16regCoils_size = sizeof(Holding_Coils_Database)/sizeof(Holding_Coils_Database[0]);
-  //ModbusH.u16regCoilsRO_size = sizeof(Input_Coils_Database)/sizeof(Input_Coils_Database[0]);
+  ModbusH.u16regCoilsRO_size = sizeof(Input_Coils_Database)/sizeof(Input_Coils_Database[0]);
   ModbusH.xTypeHW = USART_HW_DMA;
 
-  IO_Module_Init(&ModbusH);
-  Control_Thread_Init(&ModbusH);
+  IO_Module_Init(&IOmodule);
+  Control_Thread_Init(&IOmodule);
 
   //Initialize MODBUS library
   ModbusInit(&ModbusH);
@@ -151,7 +155,6 @@ int main(void)
 
   //Initialize the SSD1306 OLED
   //ssd1306_Init();
-  //ssd1306_TestAll();
 
   /* USER CODE END 2 */
 

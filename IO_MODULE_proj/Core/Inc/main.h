@@ -49,11 +49,8 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-//extern modbusHandler_t ModbusH;
-//extern uint16_t ModbusDATA[128];
 
 /* USER CODE END EM */
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -64,18 +61,18 @@ static uint16_t Holding_Registers_Database[10]={
 };
 
 //Input Registers - can only be read
-static uint16_t Input_Register_Database[20] = {
+static uint16_t Input_Register_Database[10] = {
 		0000,  1111,  2222,  3333,  4444,  5555,  6666,  7777,  8888,  9999
 };
 
 //Coil database - 1bit registers, can be written and read from
-static uint16_t Holding_Coils_Database[5]={
-		0b0000000000000010
+static uint16_t Holding_Coils_Database[3]={
+		0b0000000000000000
 };
 
 //Input coil database - 1bit registers, can only be read
-static  uint16_t Input_Coils_Database[5]={
-			0b0000000000000000, 0b0000000000000000
+static  uint16_t Input_Coils_Database[3]={
+		0b0000000000000000, 0b0000000000000000
 };
 
 
