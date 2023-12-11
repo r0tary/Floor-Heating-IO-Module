@@ -186,6 +186,15 @@ void ControlTask(void *argument){
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 		PID0_step(Temperature[0]);
+
+		if (PID0_Y.y > 0){
+			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
+			bitWrite(IO, TWA1_EN, 1);
+		}
+		else if (PID0_Y.y == 0){
+			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 0);
+			bitWrite(IO, TWA1_EN, 0);
+		}
 	}
 }
 #endif

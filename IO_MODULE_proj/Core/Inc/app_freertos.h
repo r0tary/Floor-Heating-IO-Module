@@ -77,7 +77,7 @@ typedef enum MODES
 	TEST_PID			= 2
 }mode_t;
 
-#define MODE 1
+#define MODE 0
 
 
 
