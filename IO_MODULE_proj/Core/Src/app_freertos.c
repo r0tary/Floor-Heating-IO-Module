@@ -108,9 +108,6 @@ unsigned long currentTime = 0;
 unsigned long last_pid_timer = 0;
 
 // PID tuning parameters
-static const float KPx = 2.4;
-static const float KIx = 0.015;
-static const float KDx = 0.28;
 
 /* USER CODE END Variables */
 
@@ -209,6 +206,7 @@ void CalculateTemp_Thread(void *argument){
 	}
 
 }
+// Temperature = (((ADCrawReading * 0.00073242) - 0.408)*100) / 2.04;
 void bitWrite(modbusHandler_t * modH, uint8_t pos, uint8_t val)
 {
 	uint16_t *temp;
