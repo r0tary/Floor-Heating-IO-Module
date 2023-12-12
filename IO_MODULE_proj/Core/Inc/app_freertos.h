@@ -51,6 +51,7 @@ void Control_Thread_Init(io_module_t *IO);
 void IO_Module_Init(io_module_t *IO);
 void bitWrite(io_module_t *IO, uint8_t pos, uint8_t val);
 uint8_t bitRead(uint16_t *IO, uint8_t coilNR);
+void TwaControlTim(void *argument);
 
 
 

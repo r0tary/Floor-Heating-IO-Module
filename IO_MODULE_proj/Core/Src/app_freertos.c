@@ -58,13 +58,18 @@ const osThreadAttr_t Screen_attributes = {
 	  .stack_size = 128 * 4
 };
 
-/*------------Thread attributes/handles------------*/
-// Timer handle
+/*------------Timer attributes/handles------------*/
+// Timer handle for control thread
 osTimerId_t controlTimerHandle;
 const osTimerAttr_t controlTimer_attributes = {
   .name = "controlTimer"
 };
 
+// Timer handle for TWA control
+osTimerId_t TwaTimerHandle;
+const osTimerAttr_t TwaTimer_attributes = {
+  .name = "TwaTimer"
+};
 
 /*------------Event Flags/attributes------------*/
 // Thread flags handle
@@ -95,17 +100,6 @@ volatile double Temperature[2];
 //Control timer frequency
 #define CONTROLFREQ 1000
 
-// PID variables
-float pid_X = 0;
-float pid_Px = 0;
-float pid_Ix = 0;
-float pid_Dx = 0;
-int x_setpoint = 0;
-float pid_error = 0;
-float last_x_error = 0;
-float dt = 0;
-unsigned long currentTime = 0;
-unsigned long last_pid_timer = 0;
 
 // PID tuning parameters
 
@@ -136,14 +130,6 @@ void IO_Module_Init(io_module_t * IO)
 }
 
 
-
-// ADC complete conversion callback
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-	//osEventFlagsSet(tempFlagsHandle,0x01);
-	osThreadFlagsSet(TempCalcHandle, 0x01);
-}
-
 // Initializes the thread and event flags in charge of calculating the temperature values form PT1000
 void ADC_Temp_Thread_Start(void)
 {
@@ -151,13 +137,15 @@ void ADC_Temp_Thread_Start(void)
 	tempFlagsHandle = osEventFlagsNew(&tempFlags_attributes);
 }
 
-// Initializes required components for Control algorithm thread
 
+// Initializes required components for Control algorithm thread
 void Control_Thread_Init(io_module_t *IO)
 {
 	ControlHandle = osThreadNew(ControlTask, IO, &Control_attributes);
 	controlTimerHandle = osTimerNew(ControlExecTim, osTimerPeriodic, NULL, &controlTimer_attributes);
+	TwaTimerHandle = osTimerNew(TwaControlTim, osTimerOnce, NULL, &TwaTimer_attributes);
 }
+
 
 #if MODE == 0
 void ControlTask(void *argument){
@@ -168,12 +156,6 @@ void ControlTask(void *argument){
 
 	for(;;)
 	{
-		/*pid_error = //feedback(room T) - x_setpoint;
-		pid_Px = KPx * pid_error;
-		pid_Ix = pid_Ix + (KIx * pid_error);
-		pid_Dx = KDx * ((pid_error - last_x_error) / dt);
-		pid_X = pid_Px + pid_Ix + pid_Dx;
-		last_x_error = pid_error;*/
 
 		// Request room temperature ¿Function?, run control algorithm and get an output
 		// Check output and change state of the TWA based on it.
@@ -187,6 +169,11 @@ void ControlTask(void *argument){
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 		PID0_step(Temperature[0]);
 
+		// Timer based on PID output
+		osTimerStart(TwaTimerHandle, PID0_Y.y*CONTROLFREQ);
+		HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
+
+		/*
 		if (PID0_Y.y > 0){
 			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
 			bitWrite(IO, TWA1_EN, 1);
@@ -195,8 +182,11 @@ void ControlTask(void *argument){
 			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 0);
 			bitWrite(IO, TWA1_EN, 0);
 		}
+		*/
 	}
 }
+
+
 #endif
 #if MODE == 1
 
@@ -259,6 +249,7 @@ void CalculateTemp_Thread(void *argument){
 
 }
 
+
 void bitWrite(io_module_t * IO, uint8_t pos, uint8_t val)
 // Temperature = (((ADCrawReading * 0.00073242) - 0.408)*100) / 2.04;
 {
@@ -273,6 +264,7 @@ void bitWrite(io_module_t * IO, uint8_t pos, uint8_t val)
 	}
 }
 
+
 uint8_t bitRead(uint16_t *Coils, uint8_t coilNr)
 {
 	uint16_t temp;
@@ -285,14 +277,31 @@ uint8_t bitRead(uint16_t *Coils, uint8_t coilNr)
 	return res;
 }
 
+
 /* ControlExecTim function */
 void ControlExecTim(void *argument)
 {
   /* USER CODE BEGIN ControlExecTim */
-	//HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 	osThreadFlagsSet(ControlHandle, 0x01);
   /* USER CODE END ControlExecTim */
 }
+
+
+// TWA control callback
+void TwaControlTim(void *argument)
+{
+	HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 0);
+	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+}
+
+
+// ADC complete conversion callback
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+	//osEventFlagsSet(tempFlagsHandle,0x01);
+	osThreadFlagsSet(TempCalcHandle, 0x01);
+}
+
 
 void Screen_Thread(void *argument){
 
