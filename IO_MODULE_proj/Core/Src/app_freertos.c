@@ -98,7 +98,7 @@ volatile double ADCvoltage[2];
 volatile double Temperature[2];
 
 //Control timer frequency
-#define CONTROLFREQ 1000
+#define CONTROLFREQ 2000
 
 
 // PID tuning parameters
@@ -143,7 +143,7 @@ void Control_Thread_Init(io_module_t *IO)
 {
 	ControlHandle = osThreadNew(ControlTask, IO, &Control_attributes);
 	controlTimerHandle = osTimerNew(ControlExecTim, osTimerPeriodic, NULL, &controlTimer_attributes);
-	TwaTimerHandle = osTimerNew(TwaControlTim, osTimerOnce, NULL, &TwaTimer_attributes);
+	TwaTimerHandle = osTimerNew(TwaControlTim, osTimerOnce, IO, &TwaTimer_attributes);
 }
 
 
@@ -161,22 +161,21 @@ void ControlTask(void *argument){
 		// Check output and change state of the TWA based on it.
 		// Run this loop every 1 second
 
-		/*TWA_Status = bitRead(modH,1);
-		HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin,TWA_Status);
-		osDelay(5000);*/
-
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 		PID0_step(Temperature[0]);
 
 		// Timer based on PID output
-		osTimerStart(TwaTimerHandle, PID0_Y.y*CONTROLFREQ);
-		HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
-
+		if(PID0_Y.y != 0)
+		{
+			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
+			bitWrite(IO, TWA1_EN, 1);
+			osTimerStart(TwaTimerHandle, PID0_Y.y*CONTROLFREQ);
+		}
 		/*
 		if (PID0_Y.y > 0){
 			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
-			bitWrite(IO, TWA1_EN, 1);
+
 		}
 		else if (PID0_Y.y == 0){
 			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 0);
@@ -290,7 +289,9 @@ void ControlExecTim(void *argument)
 // TWA control callback
 void TwaControlTim(void *argument)
 {
+	io_module_t *IO = (io_module_t *)argument;
 	HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 0);
+	bitWrite(IO, TWA1_EN, 0);
 	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
 }
 

@@ -34,7 +34,7 @@ static RT_MODEL_PID0_T PID0_M_;
 RT_MODEL_PID0_T *const PID0_M = &PID0_M_;
 
 // Tuning parameters
-real_T kP = 0.002;
+real_T kP = 0.5;
 real_T kI = 0.001;
 real_T kD = 0.0;
 
