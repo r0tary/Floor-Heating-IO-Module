@@ -98,7 +98,7 @@ volatile double ADCvoltage[2];
 volatile double Temperature[2];
 
 //Control timer frequency
-#define CONTROLFREQ 2000
+#define CONTROLFREQ 30000
 
 
 // PID tuning parameters
@@ -168,8 +168,9 @@ void ControlTask(void *argument){
 		// Timer based on PID output
 		if(PID0_Y.y != 0)
 		{
-			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
-			bitWrite(IO, TWA1_EN, 1);
+			HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin, 1);
+			HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
+			bitWrite(IO, TWA2_EN, 1);
 			osTimerStart(TwaTimerHandle, PID0_Y.y*CONTROLFREQ);
 		}
 		/*
@@ -290,9 +291,9 @@ void ControlExecTim(void *argument)
 void TwaControlTim(void *argument)
 {
 	io_module_t *IO = (io_module_t *)argument;
-	HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 0);
-	bitWrite(IO, TWA1_EN, 0);
-	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+	HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin, 0);
+	bitWrite(IO, TWA2_EN, 0);
+	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
 }
 
 
