@@ -22,9 +22,11 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+Core/Inc \
 Core/Src \
 Core/Startup \
 Drivers/STM32WBxx_HAL_Driver/Src \
+Middlewares/ST/STM32_WPAN \
 Middlewares/ST/STM32_WPAN/utilities \
 Middlewares/ST/STM32_WPAN/zigbee/core/src \
 Middlewares/ST/STM32_WPAN/zigbee/platform \

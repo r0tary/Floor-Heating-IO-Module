@@ -1,0 +1,8 @@
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:127:22:AMM_Init	32	static
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:284:22:AMM_DeInit	16	static
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:318:22:AMM_Alloc	64	static,ignoring_inline_asm
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:469:22:AMM_Free	48	static,ignoring_inline_asm
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:562:6:AMM_BackgroundProcess	16	static
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:581:6:pushPending	16	static
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:590:6:passPendingToActive	16	static
+../Middlewares/ST/STM32_WPAN/utilities/advanced_memory_manager.c:603:39:popActive	16	static
