@@ -56,10 +56,10 @@ void TwaControlTim(void *argument);
 /*------------IO Module Configuration------------*/
 
 //TWA configuration, 0 = NOT connected, 1 = connected
-#define TWA_1			1
+#define TWA_1			0
 #define TWA_2			1
-#define TWA_3			1
-#define TWA_4			1
+#define TWA_3			0
+#define TWA_4			0
 
 //PT1000 temp sensor configuration, 0 = NOT connected, 1 = connected
 #define PT1k_1		0

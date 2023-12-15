@@ -34,8 +34,8 @@ static RT_MODEL_PID0_T PID0_M_;
 RT_MODEL_PID0_T *const PID0_M = &PID0_M_;
 
 // Tuning parameters
-real_T kP = 0.5;
-real_T kI = 0.001;
+real_T kP = 0.3;
+real_T kI = 0.15;
 real_T kD = 0.0;
 
 float rtb_Sum = 0;
@@ -44,7 +44,7 @@ float temp_err = 0;
 /* Model step function */
 void PID0_step(double Temp)
 {
-  real_T Input = 293.15 - (Temp + 273.15);
+  real_T Input = 298.15 - (Temp + 273.15);
   real_T rtb_FilterCoefficient;
   PID0_U.u = Input;
   /* Gain: '<S36>/Filter Coefficient' incorporates:
@@ -67,9 +67,9 @@ void PID0_step(double Temp)
 
 
   /* Saturate: '<S40>/Saturation' */
-  if (rtb_Sum > 1.0) {
+  if (rtb_Sum > 0.9) {
     /* Saturate: '<S40>/Saturation' */
-    PID0_Y.y = 1.0;
+    PID0_Y.y = 0.9;
   } else if (rtb_Sum < 0.0) {
     /* Saturate: '<S40>/Saturation' */
     PID0_Y.y = 0.0;
@@ -89,6 +89,12 @@ void PID0_step(double Temp)
    */
   // Integral gain 0.001
   PID0_DW.Integrator_DSTATE += ((Input + temp_err) * kI);
+
+  if(PID0_DW.Integrator_DSTATE >= 0.9)
+	  PID0_DW.Integrator_DSTATE = 0.9;
+
+  if(PID0_DW.Integrator_DSTATE < 0)
+	  PID0_DW.Integrator_DSTATE = 0;
 
   /* Update for DiscreteIntegrator: '<S28>/Filter' */
   PID0_DW.Filter_DSTATE += 50.0 * rtb_FilterCoefficient;

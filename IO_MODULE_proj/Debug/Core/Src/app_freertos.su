@@ -6,6 +6,6 @@
 ../Core/Src/app_freertos.c:253:6:bitWrite	24	static
 ../Core/Src/app_freertos.c:268:9:bitRead	24	static
 ../Core/Src/app_freertos.c:282:6:ControlExecTim	16	static
-../Core/Src/app_freertos.c:291:6:TwaControlTim	16	static
-../Core/Src/app_freertos.c:299:6:HAL_ADC_ConvCpltCallback	16	static
-../Core/Src/app_freertos.c:306:6:Screen_Thread	16	static
+../Core/Src/app_freertos.c:291:6:TwaControlTim	24	static
+../Core/Src/app_freertos.c:301:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/app_freertos.c:308:6:Screen_Thread	16	static
