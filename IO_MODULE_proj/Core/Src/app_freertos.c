@@ -26,6 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
 #include "PID0.h"
+#include "IO_Config.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -72,11 +73,6 @@ const osTimerAttr_t TwaTimer_attributes = {
 };
 
 /*------------Event Flags/attributes------------*/
-// Thread flags handle
-osEventFlagsId_t tempFlagsHandle;
-const osEventFlagsAttr_t tempFlags_attributes = {
-  .name = "tempFlags"
-};
 
 /* USER CODE END PTD */
 
@@ -93,12 +89,9 @@ const osEventFlagsAttr_t tempFlags_attributes = {
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN Variables */
-volatile uint16_t ADCrawReading[2];
-volatile double ADCvoltage[2];
-volatile double Temperature[2];
-
-//Control timer frequency
-#define CONTROLFREQ 2000
+volatile uint16_t ADCrawReading[3];
+volatile double ADCvoltage[3];
+volatile double Temperature[3];
 
 
 // PID tuning parameters
@@ -134,7 +127,6 @@ void IO_Module_Init(io_module_t * IO)
 void ADC_Temp_Thread_Start(void)
 {
 	TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
-	tempFlagsHandle = osEventFlagsNew(&tempFlags_attributes);
 }
 
 
@@ -159,7 +151,7 @@ void ControlTask(void *argument){
 
 		// Request room temperature ¿Function?, run control algorithm and get an output
 		// Check output and change state of the TWA based on it.
-		// Run this loop every 1 second
+		// Run this loop CONTROLFREQ
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
@@ -172,6 +164,7 @@ void ControlTask(void *argument){
 			bitWrite(IO, TWA1_EN, 1);
 			osTimerStart(TwaTimerHandle, PID0_Y.y*CONTROLFREQ);
 		}
+
 		/*
 		if (PID0_Y.y > 0){
 			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
@@ -235,13 +228,15 @@ void CalculateTemp_Thread(void *argument){
 
 	for(;;)
 	{
-		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,2);
-		//osEventFlagsWait(tempFlagsHandle, 0x01, osFlagsWaitAll, osWaitForever);
+		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,3);  // Also use N_PT1000
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
-		ADCvoltage[0] = ADCrawReading[0] * 0.00073242;
-		Temperature[0] = ((ADCvoltage[0] - 0.408)*100) / 2.04;
-		ADCvoltage[1] = ADCrawReading[1] * 0.00073242;
-		Temperature[1] = ((ADCvoltage[1] - 0.408)*100) / 2.04;
+
+		for(int i = 0; i < 3; i++)  // Use N_PT1000 to dinamycally read multiple adc values
+		{
+			ADCvoltage[i] = ADCrawReading[i] * 0.00073242;
+			Temperature[i] = ((ADCvoltage[i] - 0.408)*100) / 2.04;
+		}
+
 		HAL_ADC_Stop_DMA(&hadc1);
 		osDelay(1);
 	}
@@ -299,7 +294,6 @@ void TwaControlTim(void *argument)
 // ADC complete conversion callback
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-	//osEventFlagsSet(tempFlagsHandle,0x01);
 	osThreadFlagsSet(TempCalcHandle, 0x01);
 }
 

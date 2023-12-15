@@ -51,6 +51,7 @@ extern "C" {
 /* USER CODE BEGIN EM */
 
 /* USER CODE END EM */
+
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 

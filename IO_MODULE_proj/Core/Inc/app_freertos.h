@@ -31,10 +31,6 @@ extern void ControlTask(void *argument);
 extern void Screen_Thread(void *argument);
 void ControlExecTim(void *argument);
 
-//Event handles and attributes
-extern osEventFlagsId_t tempFlagsHandle;
-	extern const osEventFlagsAttr_t tempFlags_attributes;
-
 
 typedef struct
 	{
@@ -42,6 +38,8 @@ typedef struct
 		uint16_t *u16regsRO;
 		uint16_t *u16regsCoils;
 		uint16_t *u16regsCoilsRO;
+		const uint8_t Pt;
+		const uint16_t Twa;
 	}io_module_t;
 
 
