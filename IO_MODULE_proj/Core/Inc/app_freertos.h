@@ -38,13 +38,14 @@ typedef struct
 		uint16_t *u16regsRO;
 		uint16_t *u16regsCoils;
 		uint16_t *u16regsCoilsRO;
+		double TempRoom;
 		const uint8_t Pt;
 		const uint16_t Twa;
 	}io_module_t;
 
 
 //Function prototypes
-void ADC_Temp_Thread_Start(void);
+void ADC_Temp_Thread_Start(io_module_t *IO);
 void Control_Thread_Init(io_module_t *IO);
 void IO_Module_Init(io_module_t *IO);
 void bitWrite(io_module_t *IO, uint8_t pos, uint8_t val);
@@ -104,11 +105,21 @@ typedef enum COIL_MAP
 	TEMP4_W_STATUS			= 23
 }coil_t;
 
-/*typedef enum INPUT_REG_MAP
+typedef enum INPUT_REG_MAP
 {
+	TEMP1_READ				= 0,
+	TEMP2_READ				= 1,
+	TEMP3_READ				= 2,
+	TEMP4_READ				= 3,
 
+	TEMP1_W_READ 			= 4,
+	TEMP2_W_READ 			= 5,
+	TEMP3_W_READ 			= 6,
+	TEMP4_W_READ 			= 7,
+
+	SET_POINT_TEMP 			= 9,
 }input_reg_t;
-*/
+
 
 
 

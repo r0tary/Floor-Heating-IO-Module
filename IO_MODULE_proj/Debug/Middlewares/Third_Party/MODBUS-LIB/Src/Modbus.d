@@ -64,6 +64,7 @@ Middlewares/Third_Party/MODBUS-LIB/Src/Modbus.o: \
  C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
  ../Core/Inc/ssd1306_conf.h \
  C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h \
+ ../Core/Inc/PID0.h ../Core/Inc/rtwtypes.h ../Core/Inc/PID0_types.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
@@ -131,5 +132,8 @@ C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/M
 C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
 ../Core/Inc/ssd1306_conf.h:
 C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:
+../Core/Inc/PID0.h:
+../Core/Inc/rtwtypes.h:
+../Core/Inc/PID0_types.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:

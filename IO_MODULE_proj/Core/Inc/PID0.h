@@ -67,7 +67,7 @@ extern ExtY_PID0_T PID0_Y;
 
 /* Model entry point functions */
 extern void PID0_initialize(void);
-extern void PID0_step(double);
+extern void PID0_step(io_module_t *IO);
 extern void PID0_terminate(void);
 
 /* Real-time Model object */

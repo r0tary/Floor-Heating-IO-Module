@@ -126,9 +126,9 @@ void IO_Module_Init(io_module_t * IO)
 
 
 // Initializes the thread and event flags in charge of calculating the temperature values form PT1000
-void ADC_Temp_Thread_Start(void)
+void ADC_Temp_Thread_Start(io_module_t *IO)
 {
-	TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
+	TempCalcHandle = osThreadNew(CalculateTemp_Thread, IO, &TempCalc_attributes);
 }
 
 
@@ -157,7 +157,7 @@ void ControlTask(void *argument){
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-		PID0_step(Temperature[0]);
+		PID0_step(IO);
 
 		// Timer based on PID output
 		if(PID0_Y.y != 0)
@@ -226,19 +226,24 @@ void ControlTask(void *argument){
 #endif
 
 void CalculateTemp_Thread(void *argument){
-
+	io_module_t *IO = (io_module_t *)argument;
+	uint16_t *temp;
 	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
 
 	for(;;)
 	{
-		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,3);  // Also use N_PT1000
+		HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCrawReading,2);  // Also use N_PT1000
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 
-		for(int i = 0; i < 3; i++)  // Use N_PT1000 to dinamycally read multiple adc values
+		for(int i = 0; i < 2; i++)  // Use N_PT1000 to dinamycally read multiple adc values
 		{
 			ADCvoltage[i] = ADCrawReading[i] * 0.00073242;
 			Temperature[i] = ((ADCvoltage[i] - 0.408)*100) / 2.04;
 		}
+
+		IO->TempRoom = Temperature[0];
+		temp = &IO->u16regsRO[TEMP1_READ];
+		*temp = (uint16_t)Temperature[0];
 
 		HAL_ADC_Stop_DMA(&hadc1);
 		osDelay(1);

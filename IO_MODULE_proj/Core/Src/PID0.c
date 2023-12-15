@@ -17,7 +17,8 @@
  * Validation result: Not run
  */
 
-#include "PID0.h"
+//#include "PID0.h"
+#include "main.h"
 #include "rtwtypes.h"
 
 /* Block states (default storage) */
@@ -42,9 +43,14 @@ float rtb_Sum = 0;
 float temp_err = 0;
 
 /* Model step function */
-void PID0_step(double Temp)
+void PID0_step(io_module_t *IO)
 {
-  real_T Input = 298.15 - (Temp + 273.15);
+	uint16_t SetPoint = IO->u16regsHR[SET_POINT_TEMP];
+	double Temp = IO->TempRoom;
+
+
+
+  real_T Input = SetPoint - (Temp + 273.15);
   real_T rtb_FilterCoefficient;
   PID0_U.u = Input;
   /* Gain: '<S36>/Filter Coefficient' incorporates:
