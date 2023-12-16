@@ -9,8 +9,8 @@
 #define INC_IO_CONFIG_H_
 
 //Control timer frequency
-#define CONTROLFREQ 2000
-#define N_ROOMS 2
+#define CONTROLFREQ 30000
+#define N_ROOMS 1
 #define N_PT1000
 
 

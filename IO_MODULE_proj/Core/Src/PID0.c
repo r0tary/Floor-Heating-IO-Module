@@ -47,20 +47,10 @@ void PID0_step(double Temp)
   real_T Input = 298.15 - (Temp + 273.15);
   real_T rtb_FilterCoefficient;
   PID0_U.u = Input;
-  /* Gain: '<S36>/Filter Coefficient' incorporates:
-   *  DiscreteIntegrator: '<S28>/Filter'
-   *  Gain: '<S27>/Derivative Gain'
-   *  Inport: '<Root>/u'
-   *  Sum: '<S28>/SumD'
-   */
+
   // Derivative gain 0.0
   rtb_FilterCoefficient = (kD * PID0_U.u - PID0_DW.Filter_DSTATE) * 100.0;
 
-  /* Sum: '<S42>/Sum' incorporates:
-   *  DiscreteIntegrator: '<S33>/Integrator's
-   *  Gain: '<S38>/Proportional Gain'
-   *  Inport: '<Root>/u'
-   */
   // Proportional gain 0.001
   rtb_Sum = (kP * PID0_U.u + PID0_DW.Integrator_DSTATE) +
     rtb_FilterCoefficient;
@@ -79,14 +69,6 @@ void PID0_step(double Temp)
     PID0_Y.y = rtb_Sum;
   }
 
-  /* End of Saturate: '<S40>/Saturation' */
-
-  /* Update for DiscreteIntegrator: '<S33>/Integrator' incorporates:
-   *  Gain: '<S30>/Integral Gain'
-   *  Inport: '<Root>/u'
-   *  Sum: '<S26>/SumI2'
-   *  Sum: '<S26>/SumI4'
-   */
   // Integral gain 0.001
   PID0_DW.Integrator_DSTATE += ((Input + temp_err) * kI);
 
