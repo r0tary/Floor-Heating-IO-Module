@@ -36,7 +36,6 @@ extern "C" {
 #include "ssd1306.h"
 #include "PID0.h"
 
-
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -60,7 +59,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 //Holding registers - can be written and read from
 static uint16_t Holding_Registers_Database[10]={
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  296
 };
 
 //Input Registers - can only be read
@@ -77,7 +76,6 @@ static uint16_t Holding_Coils_Database[3]={
 static  uint16_t Input_Coils_Database[3]={
 		0b0000000000000000, 0b0000000000000000
 };
-
 
 
 /* USER CODE END EFP */

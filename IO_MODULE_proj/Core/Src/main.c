@@ -73,7 +73,6 @@ static void MX_DMA_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USB_PCD_Init(void);
 static void MX_I2C1_Init(void);
-static void MX_ADC1_Init(void);
 void StartDefaultTask(void *argument);
 
 /* USER CODE BEGIN PFP */
@@ -123,11 +122,6 @@ int main(void)
   ADC_Init();
   /* USER CODE BEGIN 2 */
 
-  IOmodule.u16regsHR = Holding_Registers_Database;
-  IOmodule.u16regsRO = Input_Register_Database;
-  IOmodule.u16regsCoils = Holding_Coils_Database;
-  IOmodule.u16regsCoilsRO = Input_Coils_Database;
-
   ModbusH.uModbusType = MB_SLAVE;
   ModbusH.port = &huart1;
   ModbusH.u8id = 1;
@@ -145,7 +139,7 @@ int main(void)
   ModbusH.xTypeHW = USART_HW_DMA;
 
   IO_Module_Init(&IOmodule);
-  Control_Thread_Init(&IOmodule);
+  Control_Thread_Init();
 
   //Initialize MODBUS library
   ModbusInit(&ModbusH);

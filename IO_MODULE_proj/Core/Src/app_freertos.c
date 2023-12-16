@@ -67,7 +67,7 @@ const osTimerAttr_t controlTimer_attributes = {
 };
 
 // Timer handle for TWA control
-osTimerId_t TwaTimerHandle;
+osTimerId_t TwaTimerHandle[N_ROOMS];
 const osTimerAttr_t TwaTimer_attributes = {
   .name = "TwaTimer"
 };
@@ -91,7 +91,8 @@ const osTimerAttr_t TwaTimer_attributes = {
 /* USER CODE BEGIN Variables */
 volatile uint16_t ADCrawReading[N_ROOMS];
 volatile double ADCvoltage[N_ROOMS];
-volatile double Temperature[N_ROOMS];
+
+io_module_t rooms[N_ROOMS];
 
 // PID tuning parameters
 
@@ -110,6 +111,7 @@ volatile double Temperature[N_ROOMS];
 //IO Module Configuration function
 void IO_Module_Init(io_module_t * IO)
 {
+	/*
 	bitWrite(IO,TWA1_STATUS,TWA_1);
 	bitWrite(IO,TWA2_STATUS,TWA_2);
 	bitWrite(IO,TWA3_STATUS,TWA_3);
@@ -119,6 +121,38 @@ void IO_Module_Init(io_module_t * IO)
 	bitWrite(IO,TEMP2_STATUS,PT1k_2);
 	bitWrite(IO,TEMP3_STATUS,PT1k_3);
 	bitWrite(IO,TEMP4_STATUS,PT1k_4);
+	*/
+
+	// Initialize rooms
+	for(int i = 0; i < N_ROOMS; i++)
+	{
+		rooms[i].u16regsCoils = Holding_Coils_Database;
+		rooms[i].u16regsCoilsRO = Input_Coils_Database;
+		rooms[i].u16regsHR = Holding_Registers_Database;
+		rooms[i].u16regsRO = Input_Register_Database;
+		rooms[i].Pt = i;
+		rooms[i].PID_Param.Error = 0;
+
+		switch (rooms[i].Pt) {
+			case 0:
+				rooms[i].Twa = TWA1_Pin;
+				rooms[i].CoilNR = TWA1_EN;
+				break;
+			case 1:
+				rooms[i].Twa = TWA2_Pin;
+				rooms[i].CoilNR = TWA2_EN;
+				break;
+			case 2:
+				rooms[i].Twa = TWA3_Pin;
+				rooms[i].CoilNR = TWA3_EN;
+				break;
+			case 3:
+				rooms[i].Twa = TWA4_Pin;
+				rooms[i].CoilNR = TWA4_EN;
+				break;
+		}
+
+	}
 }
 
 
@@ -209,15 +243,20 @@ void ADC_Temp_Thread_Start(io_module_t *IO)
 
 
 // Initializes required components for Control algorithm thread
-void Control_Thread_Init(io_module_t *IO)
+void Control_Thread_Init(void)
 {
-	ControlHandle = osThreadNew(ControlTask, IO, &Control_attributes);
+	ControlHandle = osThreadNew(ControlTask, &rooms, &Control_attributes);
 	controlTimerHandle = osTimerNew(ControlExecTim, osTimerPeriodic, NULL, &controlTimer_attributes);
-	TwaTimerHandle = osTimerNew(TwaControlTim, osTimerOnce, IO, &TwaTimer_attributes);
+	for(int i = 0; i < N_ROOMS; i++)
+	{
+		TwaTimerHandle[i] = osTimerNew(TwaControlTim, osTimerOnce,&rooms[i], &TwaTimer_attributes);
+	}
 }
 
 
 #if MODE == 0
+
+real_T Output;
 void ControlTask(void *argument){
 	osTimerStart(controlTimerHandle, CONTROLFREQ);
 	io_module_t *IO = (io_module_t *)argument;
@@ -232,18 +271,21 @@ void ControlTask(void *argument){
 		// Run this loop CONTROLFREQ
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
-		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-		PID0_step(IO);
+		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 1);
 
-		// Timer based on PID output
-		if(PID0_Y.y != 0)
+		for(int i = 0; i < N_ROOMS; i++)
 		{
-			HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin, 1);
-			HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
-			bitWrite(IO, TWA2_EN, 1);
-			osTimerStart(TwaTimerHandle, PID0_Y.y*CONTROLFREQ);
-		}
+			Output = PID0_step(&rooms[i]);
+			// Timer based on PID output
+			if(Output!= 0)
+			{
+				HAL_GPIO_WritePin(TWA2_GPIO_Port, IO->Twa, 1);
+				HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
+				bitWrite(IO, 1);
+				osTimerStart(TwaTimerHandle[i], Output*CONTROLFREQ);
+			}
 
+		}
 		/*
 		if (PID0_Y.y > 0){
 			HAL_GPIO_WritePin(TWA1_GPIO_Port, TWA1_Pin, 1);
@@ -314,12 +356,11 @@ void CalculateTemp_Thread(void *argument){
 		for(int i = 0; i < N_ROOMS; i++)
 		{
 			ADCvoltage[i] = ADCrawReading[i] * 0.00073242;
-			Temperature[i] = ((ADCvoltage[i] - 0.408)*100) / 2.04;
-		}
+			rooms[i].TempRoom = ((ADCvoltage[i] - 0.408)*100) / 2.04;
 
-		IO->TempRoom = Temperature[0];
-		temp = &IO->u16regsRO[TEMP1_READ];
-		*temp = (uint16_t)Temperature[0];
+			temp = &IO->u16regsRO[i];
+			*temp = (uint16_t)rooms[i].TempRoom;
+		}
 
 		HAL_ADC_Stop_DMA(&hadc1);
 		osDelay(1);
@@ -328,10 +369,11 @@ void CalculateTemp_Thread(void *argument){
 }
 
 
-void bitWrite(io_module_t * IO, uint8_t pos, uint8_t val)
+void bitWrite(io_module_t * IO, uint8_t val)
 // Temperature = (((ADCrawReading * 0.00073242) - 0.408)*100) / 2.04;
 {
 	uint16_t *temp;
+	uint8_t pos = IO->CoilNR;
 	temp = &IO->u16regsCoilsRO[pos/16];
 
 	if (val == 1) {
@@ -369,8 +411,8 @@ void ControlExecTim(void *argument)
 void TwaControlTim(void *argument)
 {
 	io_module_t *IO = (io_module_t *)argument;
-	HAL_GPIO_WritePin(TWA2_GPIO_Port, TWA2_Pin, 0);
-	bitWrite(IO, TWA2_EN, 0);
+	HAL_GPIO_WritePin(TWA2_GPIO_Port, IO->Twa, 0);
+	bitWrite(IO, 0);
 	HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
 }
 

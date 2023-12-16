@@ -4,11 +4,10 @@
  *  Created on: Dec 1, 2023
  *      Author: ivand
  */
-
+#include "PID0.h"
 #ifndef INC_APP_FREERTOS_H_
 #define INC_APP_FREERTOS_H_
 #endif /* INC_APP_FREERTOS_H_ */
-
 
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
@@ -39,16 +38,18 @@ typedef struct
 		uint16_t *u16regsCoils;
 		uint16_t *u16regsCoilsRO;
 		double TempRoom;
-		const uint8_t Pt;
-		const uint16_t Twa;
+		uint8_t Pt;
+		uint16_t Twa;
+		uint8_t CoilNR;
+		DW_PID0_T PID_Param;
 	}io_module_t;
 
-
 //Function prototypes
+extern real_T PID0_step(io_module_t *IO);
 void ADC_Temp_Thread_Start(io_module_t *IO);
-void Control_Thread_Init(io_module_t *IO);
+void Control_Thread_Init(void);
 void IO_Module_Init(io_module_t *IO);
-void bitWrite(io_module_t *IO, uint8_t pos, uint8_t val);
+void bitWrite(io_module_t *IO, uint8_t val);
 uint8_t bitRead(uint16_t *IO, uint8_t coilNR);
 void TwaControlTim(void *argument);
 void ADC_Init(void);

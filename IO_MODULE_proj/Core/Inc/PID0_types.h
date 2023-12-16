@@ -19,7 +19,6 @@
 
 #ifndef RTW_HEADER_PID0_types_h_
 #define RTW_HEADER_PID0_types_h_
-
 /* Forward declaration for rtModel */
 typedef struct tag_RTM_PID0_T RT_MODEL_PID0_T;
 
