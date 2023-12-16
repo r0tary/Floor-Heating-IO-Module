@@ -1,4 +1,4 @@
-/* IO project main.c */
+/* Combined main.c */
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -130,8 +130,8 @@ int main(void)
   MX_DMA_Init();
   MX_USART1_UART_Init();
   MX_USB_PCD_Init();
-  MX_ADC1_Init();
   MX_I2C1_Init();
+  //ADC_Init();
   /* USER CODE BEGIN 2 */
   MX_RTC_Init();
   MX_RF_Init();
@@ -158,7 +158,7 @@ int main(void)
   ModbusH.xTypeHW = USART_HW_DMA;
 */
   IO_Module_Init(&IOmodule);
-  Control_Thread_Init(&IOmodule);
+  Control_Thread_Init();
 
  /* //Initialize MODBUS library
   ModbusInit(&ModbusH);
@@ -198,7 +198,7 @@ int main(void)
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
-  ADC_Temp_Thread_Start();
+  //ADC_Temp_Thread_Start(&IOmodule);
 
   /* USER CODE END RTOS_THREADS */
 
@@ -696,8 +696,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LD2_Pin|LD3_Pin|TWA1_Pin|TWA2_Pin
-                          |TWA3_Pin|TWA4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, LD2_Pin|LD3_Pin|TWA4_Pin|TWA1_Pin
+                          |TWA2_Pin|TWA3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : DE_EN_Pin */
   GPIO_InitStruct.Pin = DE_EN_Pin;
@@ -719,10 +719,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : LD2_Pin LD3_Pin TWA1_Pin TWA2_Pin
-                           TWA3_Pin TWA4_Pin */
-  GPIO_InitStruct.Pin = LD2_Pin|LD3_Pin|TWA1_Pin|TWA2_Pin
-                          |TWA3_Pin|TWA4_Pin;
+  /*Configure GPIO pins : LD2_Pin LD3_Pin TWA4_Pin TWA1_Pin
+                           TWA2_Pin TWA3_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin|LD3_Pin|TWA4_Pin|TWA1_Pin
+                          |TWA2_Pin|TWA3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

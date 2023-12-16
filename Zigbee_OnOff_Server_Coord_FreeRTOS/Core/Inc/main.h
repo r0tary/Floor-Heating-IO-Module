@@ -1,3 +1,4 @@
+//Combined project  main.h//
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
@@ -34,6 +35,7 @@ extern "C" {
 #include "Modbus.h"
 #include "app_freertos.h"
 #include "ssd1306.h"
+#include "PID0.h"
 #include "app_conf.h"
 #include "app_entry.h"
 #include "app_common.h"
@@ -63,12 +65,12 @@ void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN EFP */
 //Holding registers - can be written and read from
 static uint16_t Holding_Registers_Database[10]={
-		0000,  1111,  2222,  3333,  4444,  5555,  6666,  7777,  8888,  9999
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  296
 };
 
 //Input Registers - can only be read
 static uint16_t Input_Register_Database[10] = {
-		0000,  1111,  2222,  3333,  4444,  5555,  6666,  7777,  8888,  9999
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0
 };
 
 //Coil database - 1bit registers, can be written and read from
@@ -80,6 +82,7 @@ static uint16_t Holding_Coils_Database[3]={
 static  uint16_t Input_Coils_Database[3]={
 		0b0000000000000000, 0b0000000000000000
 };
+
 
 
 
@@ -102,6 +105,8 @@ static  uint16_t Input_Coils_Database[3]={
 #define TWA2_GPIO_Port GPIOB
 #define TWA3_Pin GPIO_PIN_15
 #define TWA3_GPIO_Port GPIOB
+#define DE_EN_Pin GPIO_PIN_6
+#define DE_EN_GPIO_Port GPIOC		 
 #define JTMS_Pin GPIO_PIN_13
 #define JTMS_GPIO_Port GPIOA
 #define JTCK_Pin GPIO_PIN_14

@@ -20,10 +20,10 @@
  * Modbus functionality.
  * @ingroup UartHandle UART HAL handler
  */
-
-/*void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+/*
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 {
-	// Modbus RTU TX callback BEGIN *
+	// Modbus RTU TX callback BEGIN
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 	int i;
 	for (i = 0; i < numberHandlers; i++ )
@@ -41,9 +41,9 @@
 	// Modbus RTU TX callback END
 
 
-
 }
 */
+
 
 
 /**
@@ -54,7 +54,8 @@
  * Modbus functionality.
  * @ingroup UartHandle UART HAL handler
  */
-/*void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
+/*
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 {
 	BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
@@ -78,8 +79,9 @@
 
 	// Modbus RTU RX callback END
 
-}*/
 
+}
+*/
 
 #if  ENABLE_USART_DMA ==  1
 /*

@@ -39,6 +39,7 @@
 typedef struct {
   real_T Integrator_DSTATE;            /* '<S33>/Integrator' */
   real_T Filter_DSTATE;                /* '<S28>/Filter' */
+  real_T Error;
 } DW_PID0_T;
 
 /* External inputs (root inport signals with default storage) */
@@ -67,7 +68,7 @@ extern ExtY_PID0_T PID0_Y;
 
 /* Model entry point functions */
 extern void PID0_initialize(void);
-extern void PID0_step(double);
+//extern real_T PID0_step(io_module_t *IO);
 extern void PID0_terminate(void);
 
 /* Real-time Model object */
