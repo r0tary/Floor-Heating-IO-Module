@@ -81,6 +81,25 @@ void StartDefaultTask(void *argument);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+//Holding registers - can be written and read from
+uint16_t Holding_Registers_Database[10]={
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  25
+};
+
+//Input Registers - can only be read
+uint16_t Input_Registers_Database[10] = {
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0
+};
+
+//Coil database - 1bit registers, can be written and read from
+uint16_t Holding_Coils_Database[3]={
+		0b0000000000000000
+};
+
+//Input coil database - 1bit registers, can only be read
+uint16_t Input_Coils_Database[3]={
+		0b0000000000000000, 0b0000000000000000
+};
 
 /* USER CODE END 0 */
 
@@ -129,11 +148,11 @@ int main(void)
   ModbusH.EN_Port = DE_EN_GPIO_Port;
   ModbusH.EN_Pin = DE_EN_Pin;
   ModbusH.u16regsHR = Holding_Registers_Database;
-  ModbusH.u16regsRO = Input_Register_Database;
+  ModbusH.u16regsRO = Input_Registers_Database;
   ModbusH.u16regsCoils = Holding_Coils_Database;
   ModbusH.u16regsCoilsRO = Input_Coils_Database;
   ModbusH.u16regHR_size = sizeof(Holding_Registers_Database)/sizeof(Holding_Registers_Database[0]);
-  ModbusH.u16regRO_size = sizeof(Input_Register_Database)/sizeof(Input_Register_Database[0]);
+  ModbusH.u16regRO_size = sizeof(Input_Registers_Database)/sizeof(Input_Registers_Database[0]);
   ModbusH.u16regCoils_size = sizeof(Holding_Coils_Database)/sizeof(Holding_Coils_Database[0]);
   ModbusH.u16regCoilsRO_size = sizeof(Input_Coils_Database)/sizeof(Input_Coils_Database[0]);
   ModbusH.xTypeHW = USART_HW_DMA;

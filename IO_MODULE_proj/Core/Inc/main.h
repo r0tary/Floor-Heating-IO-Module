@@ -57,26 +57,10 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-//Holding registers - can be written and read from
-static uint16_t Holding_Registers_Database[10]={
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  296
-};
-
-//Input Registers - can only be read
-static uint16_t Input_Register_Database[10] = {
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0
-};
-
-//Coil database - 1bit registers, can be written and read from
-static uint16_t Holding_Coils_Database[3]={
-		0b0000000000000000
-};
-
-//Input coil database - 1bit registers, can only be read
-static  uint16_t Input_Coils_Database[3]={
-		0b0000000000000000, 0b0000000000000000
-};
-
+extern uint16_t Holding_Registers_Database[10];
+extern uint16_t Input_Registers_Database[10];
+extern uint16_t Holding_Coils_Database[3];
+extern uint16_t Input_Coils_Database[3];
 
 /* USER CODE END EFP */
 

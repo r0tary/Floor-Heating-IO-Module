@@ -59,12 +59,12 @@ Core/Src/PID0.o: ../Core/Src/PID0.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/app_freertos.h \
+ ../Core/Inc/app_freertos.h ../Core/Inc/PID0.h ../Core/Inc/rtwtypes.h \
+ ../Core/Inc/PID0_types.h \
  C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h \
  ../Core/Inc/ssd1306_conf.h \
  C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h \
- ../Core/Inc/PID0.h ../Core/Inc/rtwtypes.h ../Core/Inc/PID0_types.h \
- ../Core/Inc/rtwtypes.h
+ ../Core/Inc/rtwtypes.h ../Core/Inc/IO_Config.h
 ../Core/Inc/main.h:
 ../Drivers/STM32WBxx_HAL_Driver/Inc/stm32wbxx_hal.h:
 ../Core/Inc/stm32wbxx_hal_conf.h:
@@ -127,10 +127,11 @@ C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/M
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 ../Core/Inc/app_freertos.h:
-C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
-../Core/Inc/ssd1306_conf.h:
-C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:
 ../Core/Inc/PID0.h:
 ../Core/Inc/rtwtypes.h:
 ../Core/Inc/PID0_types.h:
+C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306.h:
+../Core/Inc/ssd1306_conf.h:
+C:/Users/G/CODE/FLOOR-HEATING-IO-MODULE/IO_MODULE_proj/Middlewares/Third_Party/OLED_SSD1306/Inc/ssd1306_fonts.h:
 ../Core/Inc/rtwtypes.h:
+../Core/Inc/IO_Config.h:

@@ -25,7 +25,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cmsis_os.h"
-#include "PID0.h"
 #include "IO_Config.h"
 /* USER CODE END Includes */
 
@@ -129,17 +128,17 @@ void IO_Module_Init(io_module_t * IO)
 		rooms[i].u16regsCoils = Holding_Coils_Database;
 		rooms[i].u16regsCoilsRO = Input_Coils_Database;
 		rooms[i].u16regsHR = Holding_Registers_Database;
-		rooms[i].u16regsRO = Input_Register_Database;
+		rooms[i].u16regsRO = Input_Registers_Database;
 		rooms[i].Pt = i;
 		rooms[i].PID_Param.Error = 0;
 
 		switch (rooms[i].Pt) {
 			case 0:
-				rooms[i].Twa = TWA1_Pin;
+				rooms[i].Twa = TWA2_Pin;
 				rooms[i].CoilNR = TWA1_EN;
 				break;
 			case 1:
-				rooms[i].Twa = TWA2_Pin;
+				rooms[i].Twa = TWA1_Pin;
 				rooms[i].CoilNR = TWA2_EN;
 				break;
 			case 2:
@@ -191,7 +190,7 @@ void ADC_Init(void)
 
   /** Configure initial ADC channel
   */
-  sConfig.Channel = ADC_CHANNEL_9;
+  sConfig.Channel = ADC_CHANNEL_10;
   sConfig.Rank = ADC_REGULAR_RANK_1;
   sConfig.SamplingTime = ADC_SAMPLETIME_12CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
@@ -206,7 +205,7 @@ void ADC_Init(void)
   */
   if(N_ROOMS == 2)
   {
-	  sConfig.Channel = ADC_CHANNEL_10;
+	  sConfig.Channel = ADC_CHANNEL_9;
 	  sConfig.Rank = ADC_REGULAR_RANK_2;
 	  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
 	  {
@@ -238,7 +237,7 @@ void ADC_Init(void)
 // Initializes the thread and event flags in charge of calculating the temperature values form PT1000
 void ADC_Temp_Thread_Start(io_module_t *IO)
 {
-	TempCalcHandle = osThreadNew(CalculateTemp_Thread, IO, &TempCalc_attributes);
+	TempCalcHandle = osThreadNew(CalculateTemp_Thread, NULL, &TempCalc_attributes);
 }
 
 
@@ -344,7 +343,6 @@ void ControlTask(void *argument){
 #endif
 
 void CalculateTemp_Thread(void *argument){
-	io_module_t *IO = (io_module_t *)argument;
 	uint16_t *temp;
 	HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
 
@@ -355,10 +353,10 @@ void CalculateTemp_Thread(void *argument){
 
 		for(int i = 0; i < N_ROOMS; i++)
 		{
-			ADCvoltage[i] = ADCrawReading[i] * 0.00073242;
-			rooms[i].TempRoom = ((ADCvoltage[i] - 0.408)*100) / 2.04;
+			ADCvoltage[i] = ADCrawReading[i] * 0.00080566;
+			rooms[i].TempRoom = (ADCvoltage[i]*49.02) - 24.20;
 
-			temp = &IO->u16regsRO[i];
+			temp = &rooms->u16regsRO[i];
 			*temp = (uint16_t)rooms[i].TempRoom;
 		}
 
@@ -370,7 +368,6 @@ void CalculateTemp_Thread(void *argument){
 
 
 void bitWrite(io_module_t * IO, uint8_t val)
-// Temperature = (((ADCrawReading * 0.00073242) - 0.408)*100) / 2.04;
 {
 	uint16_t *temp;
 	uint8_t pos = IO->CoilNR;

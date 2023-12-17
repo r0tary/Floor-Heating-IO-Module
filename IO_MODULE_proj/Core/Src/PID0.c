@@ -45,7 +45,7 @@ real_T kD = 0.0;
 float rtb_Sum = 0;
 real_T PID0_step(io_module_t *IO)
 {
-  uint16_t SetPoint = IO->u16regsHR[SET_POINT_TEMP];
+  real_T SetPoint = IO->u16regsHR[SET_POINT_TEMP] + 273.15;
 
   real_T Input = SetPoint - (IO->TempRoom + 273.15);
   real_T rtb_FilterCoefficient;
