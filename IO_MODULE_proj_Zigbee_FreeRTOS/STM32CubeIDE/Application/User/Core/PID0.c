@@ -50,8 +50,8 @@ real_T PID0_step(io_module_t *IO)
   //Using Zigbee
   if (IO->ThermSetpointTemp != 273)
   {
-	  SetPoint = IO->ThermSetpointTemp; //+273.15;
-	  Input = SetPoint - IO->ThermTempRoom;   // + 273.15;
+	  SetPoint = IO->ThermSetpointTemp; //+ 273.15;
+	  Input = SetPoint - IO->ThermTempRoom;//  + 273.15;
   }
 
   else

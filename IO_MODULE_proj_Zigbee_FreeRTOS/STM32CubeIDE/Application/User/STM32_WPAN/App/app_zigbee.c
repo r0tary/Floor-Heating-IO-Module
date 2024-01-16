@@ -1062,15 +1062,7 @@ static void GetThermTemp_cb(const ZbZclReadRspT *readRsp, void *arg)
       default:
         break;
       }
-      /*if  (zigbee_app_info.currentTemp == 273)
-      {
-    	  osThreadFlagsSet(OsTaskGetThermTemp,1);
-      }
-      */
-      //vTaskResume(ModbusH.myTaskModbusAHandle);
       RxCB_type = 1;
-      //osMutexRelease(MtxUSART);
-      //osThreadFlagsSet(ModbusH.myTaskModbusAHandle,1);
     }
     else
     {

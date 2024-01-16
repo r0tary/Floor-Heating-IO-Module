@@ -397,10 +397,12 @@ void StartTaskModbusSlave(void *argument)
   {
 
 	modH->i8lastError = 0;
+	//osMutexAcquire(MtxUSART, osWaitForever);
 
 
    if(modH->xTypeHW == USART_HW || modH->xTypeHW == USART_HW_DMA)
    {
+
 
 	  ulTaskNotifyTake(pdTRUE, portMAX_DELAY); /* Block until a Modbus Frame arrives */
 
@@ -479,6 +481,7 @@ void StartTaskModbusSlave(void *argument)
 
 
 	 xSemaphoreGive(modH->ModBusSphrHandle); //Release the semaphore
+	 //osMutexRelease(MtxUSART);
 
 	 continue;
 

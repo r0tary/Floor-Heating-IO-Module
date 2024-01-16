@@ -421,9 +421,9 @@ void TempZigbeeRead(void *argument){
 			for(int i = 0; i < 1; i++)// i<N_ROOMS
 			{
 				temp = &IO->u16regsRO[i+4];
-				rooms[i].ThermTempRoom = ZigbeeCurrentTemp[i]/100+ZigbeeCurrentTemp[i]%100;
+				rooms[i].ThermTempRoom = ZigbeeCurrentTemp[i]/100+(ZigbeeCurrentTemp[i]%100/100);
 				*temp = (uint16_t)rooms[i].ThermTempRoom;
-				rooms[i].ThermSetpointTemp = ZigbeeSetpointTemp[i]/100+ZigbeeSetpointTemp[i]%100;
+				rooms[i].ThermSetpointTemp = ZigbeeSetpointTemp[i]/100+(ZigbeeSetpointTemp[i]%100)/100;
 			}
 		}
 
