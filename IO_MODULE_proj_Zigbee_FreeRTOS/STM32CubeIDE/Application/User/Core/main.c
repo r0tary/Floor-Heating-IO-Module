@@ -147,7 +147,7 @@ int main(void)
 
   /* USER CODE BEGIN Init */
   /* Config code for STM32_WPAN (HSE Tuning must be done before system clock configuration) */
-  MX_APPE_Config();
+  //MX_APPE_Config();
 
   /* USER CODE END Init */
 
@@ -219,7 +219,7 @@ int main(void)
 
   //Initialize the SSD1306 OLED
   //ssd1306_Init();
-  MX_APPE_Init();
+  //MX_APPE_Init();
 
   /* USER CODE END 2 */
 

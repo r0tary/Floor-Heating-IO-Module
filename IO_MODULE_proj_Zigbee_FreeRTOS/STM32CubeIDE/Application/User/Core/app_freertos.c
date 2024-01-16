@@ -279,6 +279,7 @@ void Control_Thread_Init(void)
 	{
 		TwaTimerHandle[i] = osTimerNew(TwaControlTim, osTimerOnce,&rooms[i], &TwaTimer_attributes);
 	}
+	osThreadFlagsSet(ModbusStartHandle,1);
 }
 
 
@@ -299,7 +300,7 @@ void ControlTask(void *argument){
 
 		osThreadFlagsWait(0x01, osFlagsWaitAny, osWaitForever);
 		//Read Zigbee temperature
-		osThreadFlagsSet(ZigbeeTempReadHandle,1);
+		//osThreadFlagsSet(ZigbeeTempReadHandle,1);
 		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 1);
 							
 
