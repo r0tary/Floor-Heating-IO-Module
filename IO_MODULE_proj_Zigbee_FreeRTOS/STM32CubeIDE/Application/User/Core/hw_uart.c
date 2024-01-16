@@ -273,33 +273,33 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     {
 #if (CFG_HW_USART1_ENABLED == 1)
         case (uint32_t)USART1:
-            if(RxCB_type == 0 || HW_huart1RxCb)
+           /* if(RxCB_type == 0 || HW_huart1RxCb)
             {
                 HW_huart1RxCb();
             }
 
-            else if (RxCB_type == 1)
+            else if (RxCB_type == 1)*/
         	{
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+				BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-			// Modbus RTU RX callback BEGIN
-			int i;
-			for (i = 0; i < numberHandlers; i++ )
-			{
-				if (mHandlers[i]->port == huart )
+				// Modbus RTU RX callback BEGIN
+				int i;
+				for (i = 0; i < numberHandlers; i++ )
 				{
-
-					if(mHandlers[i]->xTypeHW == USART_HW)
+					if (mHandlers[i]->port == huart )
 					{
-						osThreadFlagsSet(ModbusH.myTaskModbusAHandle,1);
-						RingAdd(&mHandlers[i]->xBufferRX, mHandlers[i]->dataRX);
-						HAL_UART_Receive_IT(mHandlers[i]->port, &mHandlers[i]->dataRX, 1);
-						xTimerResetFromISR(mHandlers[i]->xTimerT35, &xHigherPriorityTaskWoken);
+
+						if(mHandlers[i]->xTypeHW == USART_HW)
+						{
+							osThreadFlagsSet(ModbusH.myTaskModbusAHandle,1);
+							RingAdd(&mHandlers[i]->xBufferRX, mHandlers[i]->dataRX);
+							HAL_UART_Receive_IT(mHandlers[i]->port, &mHandlers[i]->dataRX, 1);
+							xTimerResetFromISR(mHandlers[i]->xTimerT35, &xHigherPriorityTaskWoken);
+						}
+						break;
 					}
-					break;
 				}
-			}
-			portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+				portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
         	}
             break;
 #endif
